@@ -1,0 +1,19 @@
+[Unit]
+Description=Portfolio Flask service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=Rick-Arko
+PIDFile=/var/tmp/portfolio.pid
+
+ExecStart=/home/ubuntu/Portfolio-Site/venv/bin/gunicorn -c /home/ubuntu/Portfolio-Site/deployment/gunicorn-conf.py app:app
+
+Restart=on-failure
+RestartSec=30
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,29 @@
+{
+    "projects" : {
+        "1" : {
+            "title" : "Crypto App",
+            "url" : "https://github.com/rickarko/crypto-app",
+            "description" : "Consume and cache live data from the Coingecko API, frontend web application to show historical price movement, technical indicators, statistical and machine learning forecasts."
+        },
+        "2" : {
+            "title" : "Dengue Fever",
+            "url" : "https://github.com/RickArko/DengueFever",
+            "description" : "Forecasting excersise to predict the occurence of dengue fever in San Juan, Puerto Rico and Iquitos, Peru."
+        },
+        "3" : {
+            "title" : "Book Recommender",
+            "url" : "https://github.com/rickarko/bookrecommender",
+            "description" :"recommendation engine based of goodreads ucsd dataset."
+        },
+        "4" : {
+            "title" : "Porto Seguro Safe Driver Prediction",
+            "url" : "https://github.com/rickarko/ami-porto",
+            "description" : "Predict probability that a driver will initiate an auto insurance claim in the next year."
+        },
+        "5" : {
+            "title" : "Personal Website",
+            "url" : "",
+            "description" : "Oh wait you're looking at it right now. Flask application deployed on AWS EC2."
+        }
+    }
+}
