@@ -5,7 +5,6 @@ build:
     build:
       - echo "Using Dockerfile"
 run:
-  runtime-version: latest
   command: uv run gunicorn -w 4 -b 0.0.0.0:8080 --chdir src app:app
   network:
     port: 8080
