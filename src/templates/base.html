@@ -26,12 +26,8 @@
             </div>
 
             <!-- Page Content  -->
-            <div id="content">                
-                <nav class="navbar navbar-expand-lg">
-                    <div class="container-fluid">
-                        <span id="loggedin"> {% if last_upstream_commit %} You're viewing commit <a href = "{{ upstream_url }}/commit/{{ last_upstream_commit }}" target="_blank" style="text-decoration: underline;"> #{{ last_upstream_commit }} </a> {% endif %}</span>
-                    </div>
-                </nav>
+            <div id="content">
+                <h4>Data Scientist, Machine Learning Engineer</h4>
                 <hr>
                 {% block content %}
                 {% endblock %}

@@ -4,43 +4,29 @@
 
 {% block content %}
 
-<div class = "row">
-    <div class = "col-sm-12">
-        <span class="heading-meta">Experience</span>
-        <h2 class="heading">Work Experience</h2>
-    </div>
-</div>
-<div class = "container-fluid timeline-container accordion">
-    {% for experience in context.experience.values() %}
+<div class="container-fluid">
     <div class="row">
-        <div class=" timeline-circle timeline-badge-{{ loop.index }} fadeInUp-{{ loop.index }}">
-            <i class="timeline-icon fas fa-briefcase"></i>
-        </div>
-        <div class = "timeline-box experience fadeInRight-{{ loop.index }}">
-            <h4 data-toggle="collapse" data-target="#collapse-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-{{ loop.index }}">
-               {{ experience.employer_name }} <span> {{ experience.employment_duration }} </span>
-            </h4>
-            <h3> {{ experience.job_title }} </h3>
-            <p id="collapse-{{ loop.index }}" class="collapse " aria-labelledby="headingOne">
-                {{ experience.job_description }}
-            </p> 
+        <div class="col-12">
+            <h2 class="heading">Experience</h2>
+            <p class="heading-meta">Professional Journey</p>
         </div>
     </div>
-    {% endfor %}
+    
+    <div class="timeline">
+        {% for job in context.experience.values() %}
+        <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <div class="job-header">
+                    <h3 class="job-title">{{ job.job_title }}</h3>
+                    <h4 class="employer-name">{{ job.employer_name }}</h4>
+                    <span class="employment-duration">{{ job.employment_duration }}</span>
+                </div>
+                <p class="job-description">{{ job.job_description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 
-<!-- <div class = "Education">
-    <div class = "col-sm-12">
-        <span class="heading-meta">Education</span>
-        <h2 class="heading">Education</h2>
-            <h4 class="heading">Mathematics</h4>
-            <h4 class="heading">Economics</h4>
-    </div> -->
-<!-- <div class "resume">
-    <iframe src="src/static/images/resume.pdf">
-    </iframe> -->
-<!-- <div, class = "resume"> 
-    <embed src="static/resume.pdf" type="application/pdf"   height="700px" width="1800"> 
-        
-</div> -->
 {% endblock %}

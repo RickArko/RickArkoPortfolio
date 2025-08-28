@@ -1,47 +1,54 @@
 {
-    "about": "Rick Arko is an experienced Data Scientist, Machine Learning Egineer and Python Software Developer. He has built, deployed, and maintained numerous high performance, enterprise scale regression and classification solutions. Rick specializes in building, validating and maintaining, scalable machine learning services that are capable of automating complex business decisions in the fields of Supply Chain, 3PL and E-commerce. He is a capable technical leader with a practical business-first mindset. He focuses on maintable, production-grade code, empircally validated models that guarantee performance once deployed to a live setting. His recent focus has been applying machine learning to time-series and inventory optimization domain, but he has extensive experience in other business critical areas such as real-time pricing, eta estimation, anomaly detection and recommender systems.",
+    "about": "I'm a Data Scientist, Machine Learning Engineer, and Technical Leader specializing in building scalable ML systems for Supply Chain, 3PL, and E-commerce. I've led projects in forecasting, ETA prediction, pricing, and inventory optimization, with full-stack expertise spanning data analysis, engineering, deployment, stakeholder communication and executive presentation. I am passionate about solving real problems and delivering positive, ethical impact.",
+
     "skills": {
         "1": {
             "name": "Python",
-            "percentage": "90%",
-            "color": "#ec5453",
+            "percentage": "95%",
+            "color": "#3776ab",
             "icon": "fa-brands fa-python"
         },
         "2": {
-            "name": "R, RStudio(Posit)",
-            "percentage": "65%",
-            "color": "#2C98F0",
-            "icon": "fa-solid fa-r"
-        },
-        "3": {
-            "name": "Azure",
-            "percentage": "85%",
-            "color": "#ff9900",
-            "icon": "fa-brands fa-windows"
-        },
-        "4": {
-            "name": "SQL",
-            "percentage": "95%",
-            "color": "#f9bf3f",
-            "icon": "fa-solid fa-database"
-        },
-        "5": {
             "name": "Machine Learning",
             "percentage": "95%",
-            "color": "#a84cb8",
+            "color": "#e74c3c",
             "icon": "fas fa-brain"
         },
-        "6": {
+        "3": {
+            "name": "SQL",
+            "percentage": "90%",
+            "color": "#f39c12",
+            "icon": "fa-solid fa-database"
+        },
+        "4": {
             "name": "Git",
             "percentage": "90%",
-            "color": "#4054b2",
+            "color": "#2c3e50",
             "icon": "fa-brands fa-github"
+        },
+        "5": {
+            "name": "Azure",
+            "percentage": "85%",
+            "color": "#0078d4",
+            "icon": "fa-brands fa-windows"
+        },
+        "6": {
+            "name": "Statistical Analysis and Modeling",
+            "percentage": "85%",
+            "color": "#27ae60",
+            "icon": "fas fa-chart-line"
         },
         "7": {
             "name": "Docker",
             "percentage": "80%",
-            "color": "#008080",
+            "color": "#2496ed",
             "icon": "fa-brands fa-docker"
+        },
+        "8": {
+            "name": "R, RStudio(Posit)",
+            "percentage": "65%",
+            "color": "#9b59b6",
+            "icon": "fa-solid fa-r"
         }
     }
 }

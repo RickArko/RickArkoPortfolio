@@ -4,33 +4,65 @@
 
 {% block content %}
 
-<div class = "row">
-    <div class = "col-sm-12">
-        <span class="heading-meta">Projects</span>
-        <h2 class="heading">What I've been working on</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="heading">Projects</h2>
+            <p class="heading-meta">Featured Work & Portfolio</p>
+        </div>
     </div>
-</div>
-<div class = "container-fluid">
-    <div class="row service-row">
-        <div class = "col-xl-9">
-            <p class="text-center">
-                Personal projects in machine learning, statistics and python software development.
-            </p>
-            <div class = row>
-                {% for project in context.projects.values() %}
-                <div class = "col-xl-4">
-                    <div>
-                        <div class = "project-headline">
-                            <p><a href="{{ project.url }}">{{ project.title }}</a></p>
-                        </div>
-                        <div class = "project-desc">
-                            <p> {{ project.description }} </p>
+    
+    <div class="row projects-grid">
+        {% for project in context.projects.values() %}
+        <div class="col-lg-6 col-xl-4 mb-4">
+            <div class="project-card">
+                {% if project.image %}
+                <div class="project-image">
+                    <img src="{{ project.image }}" alt="{{ project.title }}">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            {% endif %}
+                            {% if project.demo_url and project.demo_url != "" and project.demo_url != "https://your-demo-url.com" %}
+                            <a href="{{ project.demo_url }}" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+                {% endif %}
+                <div class="project-content">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <p class="project-description">{{ project.description }}</p>
+                    <div class="project-tech">
+                        {% for tech in project.technologies %}
+                        <span class="tech-tag">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Links section for projects without images -->
+                    {% if not project.image %}
+                    <div class="project-links-no-image">
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="project-link-button">
+                            <i class="fab fa-github"></i> View Code
+                        </a>
+                        {% endif %}
+                        {% if project.demo_url and project.demo_url != "" and project.demo_url != "https://your-demo-url.com" %}
+                        <a href="{{ project.demo_url }}" target="_blank" class="project-link-button">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

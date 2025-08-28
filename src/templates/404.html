@@ -1,28 +1,59 @@
 {% extends 'base.html' %}
 
-{% block title %} Not found {% endblock %}
+{% block title %} Page Not Found {% endblock %}
 
 {% block content %}
-
-<div class = "row">
-    <div class = "col-sm-12">
-        <span class="heading-meta">Page does not exist</span>
-        <h2 class="heading">404 Not Found</h2>
-    </div>
-</div>
 <div class="container-fluid">
-    <div class = row>
-        <div class = "col-xl-3"></div>
-        <div class = "col-xl-6 text-center">
-            <h2 style="font-weight: normal;" >Hey there, you went way too far. </h2>
-            <h4 class="p-4" style="font-weight: normal;"> The URL <span style="font-weight: bold;"> {{ request.path }} </span> that you are looking for simply does not exists. Please try different page.
-            </h4>
-            <a href = "{{ url_for('contact') }}"> 
-                <button class = "btn btn-primary"> Reach out to development </button>
-            </a>
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="error-page">
+                <h1 class="error-code">404</h1>
+                <h2 class="error-title">Oops! Page Not Found</h2>
+                <p class="error-description">
+                    The page you're looking for doesn't exist or has been moved.
+                </p>
+                <div class="error-actions">
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Go Home
+                    </a>
+                    <a href="{{ url_for('projects') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-project-diagram"></i> View Projects
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class = "col-xl-3"></div>
     </div>
 </div>
 
+<style>
+.error-page {
+    padding: 60px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.error-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.error-description {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.error-actions .btn {
+    margin: 0 10px 10px 0;
+    padding: 12px 24px;
+}
+</style>
 {% endblock %}

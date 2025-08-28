@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from flask import Flask, render_template, request
 import constants
+from loguru import logger
 
 app = Flask(__name__)
 
@@ -38,6 +39,17 @@ def projects():
         with open(constants.PROJECT_PATH) as f:
             projects_data = json.load(f)
         return render_template('projects.html', context=projects_data)
+
+
+# @app.route('/contact/')
+# def contact():
+#     if request.method == 'GET':
+#         with open(constants.CONTACT_PATH) as f:
+#             contact_data = json.load(f)
+
+#         logger.warning(f"Contact data loaded from: {contact_data}")
+#         return render_template('contact.html', context=contact_data)
+#         # return constants.CONTACT_PATH
 
 
 application = app

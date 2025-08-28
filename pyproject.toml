@@ -8,6 +8,8 @@ dependencies = [
     "flask",
     "python-dotenv",
     "gunicorn",
+    "pillow>=11.3.0",
+    "loguru>=0.7.3",
 ]
 
 [tool.setuptools]
