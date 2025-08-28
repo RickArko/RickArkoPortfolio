@@ -2,7 +2,7 @@
 name = "Rick_Arko_Portfolio_Site"
 version = "0.1.0"
 description = "Professional webpage for Rick Arko."
-requires-python = ">=3.10"
+requires-python = "==3.10.*"
 
 dependencies = [
     "flask",
@@ -17,7 +17,6 @@ packages = ["app"]
 
 [dependency-groups]
 dev = [
-    "awscli>=1.41.15",
     "black>=25.1.0",
     "isort>=6.0.1",
     "pytest>=8.4.1",
