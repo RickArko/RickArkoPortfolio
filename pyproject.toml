@@ -12,9 +12,6 @@ dependencies = [
     "loguru>=0.7.3",
 ]
 
-[tool.setuptools]
-packages = ["app"]
-
 [dependency-groups]
 dev = [
     "black>=25.1.0",
