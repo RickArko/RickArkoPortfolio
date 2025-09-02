@@ -2,7 +2,7 @@
 name = "Rick_Arko_Portfolio_Site"
 version = "0.1.0"
 description = "Professional webpage for Rick Arko."
-requires-python = "==3.10.*"
+requires-python = "==3.11.*"
 
 dependencies = [
     "flask",
