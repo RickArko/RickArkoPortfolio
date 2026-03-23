@@ -1,13 +1,12 @@
 from pathlib import Path
 from loguru import logger
 from dotenv import find_dotenv, load_dotenv
-import os
 
 
-HOME_FILE = 'db/home.json'
-CONTACT_FILE = 'db/contact.json'
-EXPERIENCE_FILE = 'db/experience.json'
-PROJECTS_FILE = 'db/projects.json'
+HOME_FILE = "db/home.json"
+CONTACT_FILE = "db/contact.json"
+EXPERIENCE_FILE = "db/experience.json"
+PROJECTS_FILE = "db/projects.json"
 
 load_dotenv(find_dotenv())
 
@@ -19,21 +18,21 @@ def get_data_dir() -> str:
         Path: The path to the data directory.
     """
     # Start with the directory containing this file (constants.py)
-    this_file_dir = Path(__file__).parent if '__file__' in globals() else Path.cwd()
-    
+    this_file_dir = Path(__file__).parent if "__file__" in globals() else Path.cwd()
+
     # If we can find db/ relative to this file's directory, use it
-    if (this_file_dir / 'db').exists():
+    if (this_file_dir / "db").exists():
         return this_file_dir
-    
+
     # Fallback: try current working directory
     cwd = Path.cwd()
-    if (cwd / 'db').exists():
+    if (cwd / "db").exists():
         return cwd
-    
+
     # Try src subdirectory from cwd
-    if (cwd / 'src' / 'db').exists():
-        return cwd / 'src'
-    
+    if (cwd / "src" / "db").exists():
+        return cwd / "src"
+
     # Default to this file's directory
     return this_file_dir
 
