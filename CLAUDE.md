@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Flask-based personal portfolio website for Rick Arko. Serves pages with JSON-backed content (no database). Deployed via Docker on AWS App Runner.
 
+- **Live:** https://rickarko.com (also https://www.rickarko.com)
+- **App Runner URL:** https://ctydyem9cj.us-east-1.awsapprunner.com
+- **Region:** us-east-1
+
 ## Development Commands
 
 ```bash
