@@ -21,3 +21,4 @@ Thumbs.db
 logs/
 
 .keys/
+deployment/fargate/
