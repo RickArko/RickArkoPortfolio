@@ -1,32 +1,35 @@
 {% extends 'base.html' %}
 
-{% block title %} Experience {% endblock %}
-
 {% block content %}
+<section class="page-intro section section--compact">
+    <p class="section-eyebrow" data-reveal>{{ context.summary.eyebrow }}</p>
+    <h1 data-reveal>{{ context.summary.title }}</h1>
+    <p class="page-intro__copy" data-reveal>{{ context.summary.description }}</p>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <h2 class="heading">Experience</h2>
-            <p class="heading-meta">Professional Journey</p>
-        </div>
-    </div>
-    
-    <div class="timeline">
-        {% for job in context.experience.values() %}
-        <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-                <div class="job-header">
-                    <h3 class="job-title">{{ job.job_title }}</h3>
-                    <h4 class="employer-name">{{ job.employer_name }}</h4>
-                    <span class="employment-duration">{{ job.employment_duration }}</span>
-                </div>
-                <p class="job-description">{{ job.job_description }}</p>
-            </div>
-        </div>
+    <div class="capability-list" data-reveal>
+        {% for capability in context.capabilities %}
+        <span>{{ capability }}</span>
         {% endfor %}
     </div>
-</div>
+</section>
 
+<section class="section section--compact">
+    <div class="timeline">
+        {% for job in context.experience.values() %}
+        <article class="timeline-card card" data-reveal>
+            <div class="timeline-card__meta">
+                <p>{{ job.employer_name }}</p>
+                <span>{{ job.employment_duration }}</span>
+            </div>
+            <h2>{{ job.job_title }}</h2>
+            <p class="timeline-card__headline">{{ job.headline }}</p>
+            <ul class="detail-list">
+                {% for highlight in job.highlights %}
+                <li>{{ highlight }}</li>
+                {% endfor %}
+            </ul>
+        </article>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

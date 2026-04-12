@@ -1,34 +1,72 @@
 {
-    "experience" : {
-        "1" : {
-            "employer_name" : "Shipbob",
-            "employment_duration" : "February 2022 - now",
-            "job_title" : "Data Scientist",
-            "job_description" : "Data Scientist Lead specializing in Supervised Learning, but primarily focused on Forecasting. Rick built a scalable state of the art Machine Learning model to replace hundreds of custom models which led to dramatic improvement in site level forecast accuracy (where +30% error was common to <15% error). Rick's predictions power all kinds of business critical initiatives ranging from labor staffing, zone skipping to automated Inventory Placement. He carefully brings state of the art technology into a constantly changing environment where new fulfillment centers are opened on a weekly basis, enterprise customers lauch new products and move to new locations on a weekly basis and models must carefully extract a complicated signal from a noisy data stream. This kind of robust performance requires so much more than machine learning expertise: business accumen, reliable engineering and a practical business-first mindset are essential. Besides machine learning Rick has authored numerous advanced anomaly detection methods, built custom pipelines to support promotions, inventory movement, customer churn and onboarding along with stock-out adjustments. He is capable of doing the work himself as well as turning clever junior engineers and scientists into productive builders through meticulous mentorship and patient teaching."
+    "summary": {
+        "eyebrow": "Track record",
+        "title": "Built for operators, founders, and teams shipping under pressure.",
+        "description": "My background is in practical machine learning: systems that support pricing, forecasting, recommendations, and planning in environments where reliability, latency, and business clarity matter."
+    },
+    "capabilities": [
+        "Production forecasting and demand planning",
+        "Pricing, recommendation, and operational decision systems",
+        "Applied AI leadership, hiring, and mentorship",
+        "Model deployment, stakeholder alignment, and pragmatic execution"
+    ],
+    "experience": {
+        "1": {
+            "employer_name": "ShipBob",
+            "employment_duration": "February 2022 - Present",
+            "job_title": "Lead Data Scientist",
+            "headline": "Scaled forecasting and operational intelligence across a fast-changing fulfillment network.",
+            "highlights": [
+                "Replaced hundreds of custom forecast models with a more scalable machine learning approach that brought site-level error down from 30%+ to under 15%.",
+                "Built predictions that support labor planning, automated inventory placement, zone skipping, and other business-critical workflows.",
+                "Added anomaly detection, promotion adjustments, stock-out corrections, and other practical layers needed for reliable real-world performance.",
+                "Partnered across technical and business stakeholders while mentoring scientists and engineers into stronger builders."
+            ]
         },
-        "2" : {
-            "employer_name" : "Coyote Logistics",
-            "employment_duration" : "June 2021 - February 2022",
-            "job_title" : "Senior Data Scientist",
-            "job_description" : "As a Senior Data Scientist specializing in real time pricing I was the Expert maintainer of various machine learning and statistical models that power the live pricing service and multiple business critical services (market-based carrier rep compensation, auto tender acceptance, auto spot bidding, book it now, etc.). Rick led development for automated tender acceptance, as well as a new pricing service that could estimate MarketCost achieving the same error as the best ensemle of many models while only requiring 5 input features common to all shipments. This kind of practical improvement is the difference between an unusable prediction and a reliable enterprise-grade service. Rick was able to make important breakthroughs in pricing acuracy and interpretability within complex environment where hours of downtime could result in six figure losses. Rick created a scalabe REST services on AKS implementing batch and shapely endpoints for extreme speed and interpretability when needed. He interviewed, hired, and mentored all applicants and new team members, helping to grow a team of 2 to over 10."
+        "2": {
+            "employer_name": "Coyote Logistics",
+            "employment_duration": "June 2021 - February 2022",
+            "job_title": "Senior Data Scientist",
+            "headline": "Owned real-time pricing systems where quality and uptime had direct financial consequences.",
+            "highlights": [
+                "Maintained and improved machine learning and statistical models powering live pricing and several adjacent business-critical services.",
+                "Led development for automated tender acceptance and a market-cost pricing service that matched the best ensemble error while using only five common shipment inputs.",
+                "Built scalable REST services on AKS with high-throughput batch endpoints and explainability features for human review.",
+                "Interviewed, hired, and mentored new team members as the group expanded from a small core team into a larger function."
+            ]
         },
-        "3" : {
-            "employer_name" : "Coyote Logistics",
-            "employment_duration" : "July 2017 - June 2021",
-            "job_title" : "Data Scientist",
-            "job_description" : "As a Data Scientist Rick deployed numerous statistics and ML-based pricing models using ensemble/boosting techniques, LightGBM, XGBoost, Catboost, Random Forest Quantile Regression, KNN-regression, etc. Rick helped tune a two-way lightgbm based recommendation model and demonstrate lift, implemented a shapely endpoint to give human readable explanations for model recommendations that give confidence and clarity, helping end users to get actionable insights that faciliate meaningful conversation points and warm leads."
+        "3": {
+            "employer_name": "Coyote Logistics",
+            "employment_duration": "July 2017 - June 2021",
+            "job_title": "Data Scientist",
+            "headline": "Delivered pricing and recommendation models that were useful in production, not just accurate offline.",
+            "highlights": [
+                "Deployed pricing models using ensemble methods, gradient boosting, quantile regression, and other practical approaches.",
+                "Helped tune recommendation systems for freight matching and demonstrated measurable lift in production settings.",
+                "Implemented explainability endpoints that translated model behavior into human-readable reasons, increasing trust and actionability."
+            ]
         },
-        "4" : {
-            "employer_name" : "Coyote Logistics",
-            "employment_duration" : "July 2015 - August 2017",
-            "job_title" : "Data Science Analyst",
-            "job_description" : "As a Junior Data Scientist on a newly formed team, Rick built and maintained custom enterprise account forecasts with R and SPSS (ARIMA, ETS, etc.), he automated automated freight matching algorithms with R and Python and fostered meaninful communication between DBAs, Data Scientists and Software Engineers to create multiple iterations of collaborative filtering, statistical likelihood and machine learning based based recommendation engines. Developed and led AB test to determine the best algorithm to power live MyMatches application with a few hundred users."
+        "4": {
+            "employer_name": "Coyote Logistics",
+            "employment_duration": "July 2015 - August 2017",
+            "job_title": "Data Science Analyst",
+            "headline": "Started in forecasting and experimentation while learning how data products succeed inside real organizations.",
+            "highlights": [
+                "Built and maintained enterprise forecasts using statistical methods such as ARIMA and ETS across a range of business accounts.",
+                "Automated freight matching workflows with R and Python while collaborating closely with DBAs, data scientists, and software engineers.",
+                "Designed and led A/B testing to evaluate recommendation approaches for a live matching application."
+            ]
         },
-        "5" : {
-            "employer_name" : "RAR Enabled",
-            "employment_duration" : "January 2015 - July 2015",
-            "job_title" : "Data Analyst",
-            "job_description" : "Rick led the development of predictive model for 7 different debt portfolios(Healthcare, Utilities, etc.), he built numerous classification and regression models to segment debtors based on likelihood to pay and total expected value in an environment where <1% of observations had positive expected value. He deployed a scoring platform for incoming placements and performed statistical analysis to optimize revenue collection strategy."
-        }       
+        "5": {
+            "employer_name": "RAR Enabled",
+            "employment_duration": "January 2015 - July 2015",
+            "job_title": "Data Analyst",
+            "headline": "Applied predictive modeling in a noisy domain where positive outcomes were rare and precision mattered.",
+            "highlights": [
+                "Led model development across multiple debt portfolios spanning healthcare, utilities, and other domains.",
+                "Built classification and regression models to estimate payment likelihood and expected value in highly imbalanced data.",
+                "Deployed a scoring workflow for incoming placements and used statistical analysis to improve collection strategy."
+            ]
+        }
     }
 }

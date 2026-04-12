@@ -1,59 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %} Page Not Found {% endblock %}
-
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12 text-center">
-            <div class="error-page">
-                <h1 class="error-code">404</h1>
-                <h2 class="error-title">Oops! Page Not Found</h2>
-                <p class="error-description">
-                    The page you're looking for doesn't exist or has been moved.
-                </p>
-                <div class="error-actions">
-                    <a href="{{ url_for('home') }}" class="btn btn-primary">
-                        <i class="fas fa-home"></i> Go Home
-                    </a>
-                    <a href="{{ url_for('projects') }}" class="btn btn-outline-primary">
-                        <i class="fas fa-project-diagram"></i> View Projects
-                    </a>
-                </div>
-            </div>
+<section class="error-state section">
+    <div class="error-state__card card" data-reveal>
+        <p class="section-eyebrow">404</p>
+        <h1>Page Not Found</h1>
+        <p>The page you were looking for does not exist, or the link needs updating.</p>
+        <div class="hero__actions">
+            <a class="button button--primary" href="{{ url_for('home') }}">Back Home</a>
+            <a class="button button--secondary" href="{{ url_for('projects') }}">View Work</a>
         </div>
     </div>
-</div>
-
-<style>
-.error-page {
-    padding: 60px 20px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.error-code {
-    font-size: 8rem;
-    font-weight: bold;
-    color: #007bff;
-    margin-bottom: 20px;
-}
-
-.error-title {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.error-description {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 40px;
-}
-
-.error-actions .btn {
-    margin: 0 10px 10px 0;
-    padding: 12px 24px;
-}
-</style>
+</section>
 {% endblock %}

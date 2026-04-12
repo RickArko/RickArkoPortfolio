@@ -1,37 +1,52 @@
 {% extends 'base.html' %}
 
-{% block title %} Contact me {% endblock %}
-
 {% block content %}
-
-<div class="row">
-    <div class="col-sm-12">
-        <span class="heading-meta">Contact</span>
-        <h2 class="heading">Get in touch</h2>
+<section class="contact-hero section">
+    <div class="contact-hero__copy" data-reveal>
+        <p class="section-eyebrow">Work together</p>
+        <h1>Need AI leadership, implementation help, or a sharper plan for what to build next?</h1>
+        <p>
+            I work best with founders, product teams, and operators who want practical progress:
+            better decisions, better systems, and less AI theater.
+        </p>
+        <a class="button button--primary" href="mailto:{{ site.email }}">Email Rick Directly</a>
     </div>
-</div>
-<div class="container-fluid">
-    <div class="row contact-row">
-        <div class="col-xl-7">
-            <p>
-                Interested in hiring me for your project or looking to connect?
-                Reach out through any of the channels below.
-            </p>
-            <ul class="list-unstyled">
-                <li class="mb-3">
-                    <i class="fa-solid fa-envelope fa-lg"></i>
-                    <a href="mailto:rick.arko17@gmail.com">rick.arko17@gmail.com</a>
-                </li>
-                <li class="mb-3">
-                    <i class="bi bi-linkedin fa-lg"></i>
-                    <a target="_blank" href="https://www.linkedin.com/in/rickarko">LinkedIn</a>
-                </li>
-                <li class="mb-3">
-                    <i class="bi bi-github fa-lg"></i>
-                    <a target="_blank" href="https://github.com/RickArko">GitHub</a>
-                </li>
-            </ul>
+
+    <div class="contact-hero__panel card" data-reveal>
+        <p class="section-eyebrow">Best fit engagements</p>
+        <div class="contact-fit-list">
+            {% for engagement in context.engagements %}
+            <article>
+                <h2>{{ engagement.title }}</h2>
+                <p>{{ engagement.description }}</p>
+            </article>
+            {% endfor %}
         </div>
     </div>
-</div>
+</section>
+
+<section class="section section--compact">
+    <div class="contact-grid">
+        <article class="contact-card card" data-reveal>
+            <p class="section-eyebrow">Email</p>
+            <h2>{{ site.email }}</h2>
+            <p>Email is the fastest way to reach me for new work, advisory conversations, and collaboration ideas.</p>
+            <a href="mailto:{{ site.email }}">Open Email</a>
+        </article>
+
+        <article class="contact-card card" data-reveal>
+            <p class="section-eyebrow">LinkedIn</p>
+            <h2>Professional profile</h2>
+            <p>Useful if you want to connect first, share context, or continue the conversation in a more public channel.</p>
+            <a href="{{ site.linkedin_url }}" target="_blank" rel="noreferrer">Visit LinkedIn</a>
+        </article>
+
+        <article class="contact-card card" data-reveal>
+            <p class="section-eyebrow">GitHub</p>
+            <h2>Code and experiments</h2>
+            <p>Browse public repos, side projects, and the code behind this site.</p>
+            <a href="{{ site.github_url }}" target="_blank" rel="noreferrer">View GitHub</a>
+        </article>
+    </div>
+</section>
 {% endblock %}

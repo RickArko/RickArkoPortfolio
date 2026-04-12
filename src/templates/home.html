@@ -1,47 +1,117 @@
 {% extends 'base.html' %}
 
-{% block title %} About {% endblock %}
-
 {% block content %}
+<section class="hero section">
+    <div class="hero__copy" data-reveal>
+        <p class="section-eyebrow">{{ context.hero.eyebrow }}</p>
+        <h1 class="hero__title">{{ context.hero.headline }}</h1>
+        <p class="hero__lede">{{ context.hero.subheadline }}</p>
 
-<div class = "row">
-    <div class = "col-sm-12">
-        <span class="heading-meta">About</span>
-        <h2 class="heading">What I Do</h2>
-    </div>
-</div>
-<div class = "container-fluid">
-    <div class="row">
-        <div class = "container-text">
-            <p> {{ context.about }} </p>
+        <div class="hero__actions">
+            <a class="button button--primary" href="{{ context.hero.primary_cta.href }}">{{ context.hero.primary_cta.label }}</a>
+            <a class="button button--secondary" href="{{ context.hero.secondary_cta.href }}">{{ context.hero.secondary_cta.label }}</a>
         </div>
-    </div>
-</div>
-<hr>
-<div class = "row">
-    <div class = "col-sm-12">
-        <span class="heading-meta">Skill</span>
-        <h2 class="heading">Technology I Work With</h2>
-    </div>
-</div>
-<div class = "container-fluid">
 
-    <div class="row progress-row">
-        {% for skill in context.skills.values() %}
-        <div class="col-xl-6 floatLeft">
-            <div class="progress-box">
-                <div class="flex-box">
-                    <span class="skill-name"> {{ skill.name }} <i class="{{ skill.icon }}"></i> </span>
-                    <span class="skill-percent"> {{skill.percentage }}</span>
-                    
-                </div>
-                <div class="progress-full"> 
-                    <div class="progress-active" style="background-color: {{ skill.color }}">
-                    </div>
-                </div>
+        <ul class="signal-list">
+            {% for item in context.hero.highlights %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <aside class="hero__panel card card--glass" data-reveal>
+        <img class="hero__portrait" src="{{ url_for('static', filename='images/profile-image.png') }}" alt="Portrait of Rick Arko">
+        <p class="hero__panel-label">Professional profile</p>
+        <h2>{{ site.headline }}</h2>
+        <p>{{ site.availability }}</p>
+
+        <div class="hero__stats">
+            {% for stat in context.stats %}
+            <div class="hero__stat">
+                <strong>{{ stat.value }}</strong>
+                <span>{{ stat.label }}</span>
             </div>
+            {% endfor %}
         </div>
+    </aside>
+</section>
+
+<section class="section">
+    <div class="section-heading" data-reveal>
+        <p class="section-eyebrow">Why teams bring me in</p>
+        <h2>Senior judgment, hands-on execution, and a bias toward systems that survive contact with reality.</h2>
+    </div>
+    <div class="story-grid">
+        <div class="story-grid__copy card" data-reveal>
+            {% for paragraph in context.about %}
+            <p>{{ paragraph }}</p>
+            {% endfor %}
+        </div>
+        <div class="story-grid__highlights" data-reveal>
+            {% for win in context.wins %}
+            <article class="impact-card">
+                <p class="impact-card__eyebrow">{{ win.title }}</p>
+                <h3>{{ win.impact }}</h3>
+                <p>{{ win.summary }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading" data-reveal>
+        <p class="section-eyebrow">Services</p>
+        <h2>Consulting support for teams moving from AI ambition to useful delivery.</h2>
+    </div>
+    <div class="card-grid card-grid--four">
+        {% for service in context.services %}
+        <article class="feature-card card" data-reveal>
+            <div class="feature-card__icon">
+                <i class="{{ service.icon }}"></i>
+            </div>
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.description }}</p>
+        </article>
         {% endfor %}
-    </div>    
-</div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading" data-reveal>
+        <p class="section-eyebrow">Core expertise</p>
+        <h2>Built at the intersection of applied ML, modern AI, and operational decision-making.</h2>
+    </div>
+    <div class="card-grid">
+        {% for area in context.expertise %}
+        <article class="expertise-card card" data-reveal>
+            <h3>{{ area.title }}</h3>
+            <p>{{ area.description }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section section--compact">
+    <div class="section-heading" data-reveal>
+        <p class="section-eyebrow">Engagement models</p>
+        <h2>Flexible ways to work together depending on the stage and urgency.</h2>
+    </div>
+    <div class="card-grid card-grid--three">
+        {% for engagement in context.engagements %}
+        <article class="engagement-card card" data-reveal>
+            <h3>{{ engagement.title }}</h3>
+            <p>{{ engagement.description }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="cta-band" data-reveal>
+    <div>
+        <p class="section-eyebrow">Looking for a partner?</p>
+        <h2>If you need someone who can think like a strategist and build like an operator, let's talk.</h2>
+    </div>
+    <a class="button button--primary" href="{{ url_for('contact') }}">Start a Conversation</a>
+</section>
 {% endblock %}
