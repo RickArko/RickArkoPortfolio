@@ -1,7 +1,12 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "Rick_Arko_Portfolio_Site"
+name = "rickarko-portfolio"
 version = "0.1.0"
-description = "Professional webpage for Rick Arko."
+description = "Rick Arko's AI/ML consultant portfolio site."
+readme = "README.md"
 requires-python = "==3.11.*"
 
 dependencies = [
@@ -12,17 +17,44 @@ dependencies = [
     "loguru>=0.7.3",
 ]
 
+[project.scripts]
+rickarko-portfolio = "rickarko_portfolio.__main__:main"
+
 [dependency-groups]
 dev = [
-    "ruff>=0.9.0",
     "pytest>=8.4.1",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.9.0",
 ]
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["rickarko_portfolio*"]
+
 [tool.pytest.ini_options]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short --strict-markers"
+testpaths = ["tests"]
+markers = [
+    "unit: Fast unit tests for pure helpers and configuration.",
+    "integration: App factory, environment, and wiring tests.",
+    "end_to_end: HTTP-first end-to-end route coverage.",
+    "regression: Tests that protect fixed runtime and deployment contracts.",
+]
+
+[tool.coverage.run]
+source = ["rickarko_portfolio"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
+skip_covered = false
 
 [tool.ruff]
 line-length = 88
+target-version = "py311"
 
 [tool.ruff.format]
 quote-style = "double"

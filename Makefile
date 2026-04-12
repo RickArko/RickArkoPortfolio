@@ -7,7 +7,7 @@ DOMAIN ?= rickarko.com
 IMAGE_NAME ?= $(APP_NAME)
 PORT ?= 8080
 
-.PHONY: help install dev test format lint lint-shell verify docker-build docker-run ecr-setup domain-setup domain-status domain-debug
+.PHONY: help install dev test test-fast test-unit test-integration test-e2e test-regression format format-check lint check lint-shell verify docker-build docker-run ecr-setup domain-setup domain-status domain-debug
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-16s %s\n", $$1, $$2}'
@@ -16,16 +16,36 @@ install: ## Install project dependencies with uv
 	uv sync --dev
 
 dev: ## Run the Flask app locally on port 8080
-	uv run src/app.py
+	uv run python -m rickarko_portfolio
 
-test: ## Run the test suite
-	uv run pytest
+test: ## Run the full test suite with coverage
+	uv run pytest --cov=rickarko_portfolio --cov-report=term-missing --cov-fail-under=90
+
+test-fast: ## Run the fast feedback test suite
+	uv run pytest -m "not end_to_end and not regression"
+
+test-unit: ## Run unit tests only
+	uv run pytest -m unit
+
+test-integration: ## Run integration tests only
+	uv run pytest -m integration
+
+test-e2e: ## Run HTTP-first end-to-end tests only
+	uv run pytest -m end_to_end
+
+test-regression: ## Run regression tests only
+	uv run pytest -m regression
 
 format: ## Format Python code with Ruff
 	uv run ruff format src tests
 
+format-check: ## Check Python formatting with Ruff
+	uv run ruff format --check src tests
+
 lint: ## Lint Python code with Ruff
 	uv run ruff check src tests
+
+check: lint format-check test-fast ## Run the fast local quality gate
 
 lint-shell: ## Lint shell scripts with shellcheck if installed
 	@if command -v shellcheck >/dev/null 2>&1; then \
@@ -34,7 +54,7 @@ lint-shell: ## Lint shell scripts with shellcheck if installed
 		echo "shellcheck not installed; skipping shell lint"; \
 	fi
 
-verify: test lint-shell ## Run the verification steps used in this repo
+verify: lint format-check test lint-shell ## Run the full verification steps used in this repo
 
 docker-build: ## Build the Docker image locally
 	docker build -t $(IMAGE_NAME):latest .

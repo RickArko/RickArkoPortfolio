@@ -9,7 +9,7 @@ User=ubuntu
 Group=Rick-Arko
 PIDFile=/var/tmp/portfolio.pid
 
-ExecStart=/home/ubuntu/Portfolio-Site/venv/bin/gunicorn -c /home/ubuntu/Portfolio-Site/deployment/gunicorn-conf.py app:app
+ExecStart=/home/ubuntu/Portfolio-Site/venv/bin/gunicorn -c /home/ubuntu/Portfolio-Site/deployment/gunicorn-conf.py rickarko_portfolio.wsgi:app
 
 Restart=on-failure
 RestartSec=30

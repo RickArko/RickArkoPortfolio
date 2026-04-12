@@ -2,6 +2,15 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.egg-info/
+.coverage
+.coverage.*
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+htmlcov/
 
 # Virtual environments
 .venv/

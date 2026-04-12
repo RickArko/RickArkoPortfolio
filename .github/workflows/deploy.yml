@@ -1,34 +1,77 @@
-name: Deploy Portfolio
+name: Portfolio CI/CD
 
 on:
+  pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: portfolio-cicd-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 env:
   IMAGE_NAME: rickarkoportfolio
+  PYTHON_VERSION: "3.11"
+  DEPLOY_HEALTHCHECK_URL: https://rickarko.com/health
 
 jobs:
-  test:
+  test-fast:
+    name: Fast Quality Gate
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v4
 
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --dev
 
-      - name: Run tests
-        run: uv run pytest -v
+      - name: Run fast quality gate
+        run: make check
+
+  test-full:
+    name: Full Verification
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    needs: test-fast
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Install dependencies
+        run: uv sync --dev
+
+      - name: Run full verification suite
+        run: make verify
 
   build:
-    needs: test
+    name: Build Release Image
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    needs: test-full
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -47,9 +90,20 @@ jobs:
           path: image.tar.gz
           retention-days: 1
 
+      - name: Summarize build artifact
+        run: |
+          {
+            echo "## Build Stage"
+            echo "- Image name: \`${{ env.IMAGE_NAME }}\`"
+            echo "- Tags prepared: \`${{ github.sha }}\`, \`latest\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
   push-ecr:
+    name: Publish To ECR
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -79,9 +133,23 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
+      - name: Summarize published image
+        env:
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+        run: |
+          {
+            echo "## Registry Stage"
+            echo "- Pushed image tags for repository \`${ECR_REPOSITORY}\`"
+            echo "- Immutable tag: \`${{ github.sha }}\`"
+            echo "- Mutable tag: \`latest\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
   deploy:
+    name: Deploy To App Runner
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     needs: push-ecr
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -91,6 +159,78 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Trigger App Runner deployment
+        id: apprunner-deploy
         run: |
-          aws apprunner start-deployment \
-            --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }}
+          operation_id="$(
+            aws apprunner start-deployment \
+              --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }} \
+              --query 'OperationId' \
+              --output text
+          )"
+
+          echo "operation_id=${operation_id}" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for App Runner deployment operation
+        env:
+          OPERATION_ID: ${{ steps.apprunner-deploy.outputs.operation_id }}
+        run: |
+          completed="false"
+
+          for attempt in {1..60}; do
+            status="$(
+              aws apprunner list-operations \
+                --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }} \
+                --query "OperationSummaryList[?Id=='${OPERATION_ID}'] | [0].Status" \
+                --output text
+            )"
+
+            case "$status" in
+              SUCCEEDED|SUCCESS)
+                echo "Deployment operation ${OPERATION_ID} completed with status ${status}"
+                completed="true"
+                break
+                ;;
+              FAILED|ROLLBACK_FAILED|CANCELLED|CREATE_FAILED|DELETE_FAILED)
+                echo "Deployment operation ${OPERATION_ID} failed with status ${status}" >&2
+                exit 1
+                ;;
+              *)
+                echo "Deployment operation ${OPERATION_ID} status: ${status}; waiting 10 seconds..."
+                sleep 10
+                ;;
+            esac
+          done
+
+          if [[ "$completed" != "true" ]]; then
+            echo "Timed out waiting for App Runner deployment operation ${OPERATION_ID}" >&2
+            exit 1
+          fi
+
+      - name: Wait for public health endpoint
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error "$DEPLOY_HEALTHCHECK_URL" >/dev/null; then
+              echo "Health check passed on attempt ${attempt}"
+              exit 0
+            fi
+
+            echo "Health check attempt ${attempt}/30 failed; retrying in 10 seconds..."
+            sleep 10
+          done
+
+          echo "Deployment health check did not pass in time: $DEPLOY_HEALTHCHECK_URL" >&2
+          exit 1
+
+      - name: Summarize deployment
+        if: always()
+        env:
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+        run: |
+          {
+            echo "## Deployment Stage"
+            echo "- Commit: \`${{ github.sha }}\`"
+            echo "- Repository: \`${ECR_REPOSITORY}\`"
+            echo "- App Runner service: \`${{ secrets.APPRUNNER_SERVICE_ARN }}\`"
+            echo "- Operation id: \`${{ steps.apprunner-deploy.outputs.operation_id }}\`"
+            echo "- Health endpoint: \`${DEPLOY_HEALTHCHECK_URL}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

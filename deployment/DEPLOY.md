@@ -42,9 +42,52 @@ DOMAIN=rickarko.com
 
 ```bash
 make install
-make test
+make verify
 make docker-build
 ```
+
+## GitHub Actions CI/CD pipeline
+
+The repository ships with an end-to-end GitHub Actions pipeline in
+`.github/workflows/deploy.yml`.
+
+### Pipeline stages
+
+1. `Fast Quality Gate`
+   - runs on every pull request and push
+   - executes `make check`
+   - catches lint, formatting, and fast pytest failures early
+2. `Full Verification`
+   - runs on pushes to `main` and manual `workflow_dispatch`
+   - installs `shellcheck`
+   - executes `make verify`
+   - blocks release work if tests, coverage, or shell checks fail
+3. `Build Release Image`
+   - builds the Docker image
+   - tags it with the commit SHA and `latest`
+   - stores the image as a short-lived workflow artifact
+4. `Publish To ECR`
+   - authenticates to AWS
+   - pushes the SHA-tagged and `latest` images to ECR
+5. `Deploy To App Runner`
+   - triggers `aws apprunner start-deployment`
+   - waits for the App Runner deployment operation to settle
+   - performs a post-deploy health check against `https://rickarko.com/health`
+
+### Required GitHub secrets
+
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_REGION`
+- `ECR_REPOSITORY`
+- `APPRUNNER_SERVICE_ARN`
+
+### Recommended repository settings
+
+- protect `main`
+- require the GitHub Actions quality gate before merge
+- use `workflow_dispatch` for manual redeploys when needed
+- keep App Runner pointed at the ECR repository managed by the workflow
 
 ## First deploy
 
@@ -118,3 +161,13 @@ aws apprunner start-deployment --service-arn "$APPRUNNER_SERVICE_ARN"
 ```
 
 If you need to roll back the image itself, push a known-good tag back to `latest` and redeploy.
+
+## Deployment flow summary
+
+For day-to-day work, the intended end-to-end path is:
+
+1. Open a pull request and let GitHub Actions run `make check`
+2. Merge to `main` after the fast quality gate passes
+3. Let GitHub Actions run `make verify`, build the Docker image, push it to ECR, and trigger App Runner deployment
+4. Confirm the post-deploy `/health` check succeeds
+5. Inspect `make domain-status` or the App Runner console only if something looks off
