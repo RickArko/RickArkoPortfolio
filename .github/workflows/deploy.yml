@@ -12,11 +12,16 @@ concurrency:
 
 permissions:
   contents: read
+  id-token: write
 
 env:
   IMAGE_NAME: rickarkoportfolio
   PYTHON_VERSION: "3.11"
   DEPLOY_HEALTHCHECK_URL: https://rickarko.com/health
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY || 'rickarkoportfolio' }}
+  APPRUNNER_SERVICE_ARN: ${{ vars.APPRUNNER_SERVICE_ARN }}
+  AWS_ROLE_TO_ASSUME: ${{ vars.AWS_ROLE_TO_ASSUME }}
 
 jobs:
   test-fast:
@@ -68,7 +73,7 @@ jobs:
 
   build:
     name: Build Release Image
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')
     needs: test-full
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -100,7 +105,7 @@ jobs:
 
   push-ecr:
     name: Publish To ECR
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -112,12 +117,18 @@ jobs:
       - name: Load Docker image
         run: gunzip -c image.tar.gz | docker load
 
-      - name: Configure AWS credentials
+      - name: Validate deployment configuration
+        run: |
+          test -n "$AWS_ROLE_TO_ASSUME" || { echo "Missing repository variable AWS_ROLE_TO_ASSUME" >&2; exit 1; }
+          test -n "$ECR_REPOSITORY" || { echo "Missing repository variable ECR_REPOSITORY" >&2; exit 1; }
+
+      - name: Configure AWS credentials with OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          role-session-name: github-actions-portfolio-cicd
+          aws-region: ${{ env.AWS_REGION }}
+          mask-aws-account-id: true
 
       - name: Login to Amazon ECR
         id: ecr-login
@@ -126,7 +137,6 @@ jobs:
       - name: Tag and push to ECR
         env:
           ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
           docker tag ${{ env.IMAGE_NAME }}:${{ github.sha }} $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
           docker tag ${{ env.IMAGE_NAME }}:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
@@ -134,8 +144,6 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       - name: Summarize published image
-        env:
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
           {
             echo "## Registry Stage"
@@ -146,24 +154,30 @@ jobs:
 
   deploy:
     name: Deploy To App Runner
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')
     needs: push-ecr
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Configure AWS credentials
+      - name: Validate deployment configuration
+        run: |
+          test -n "$AWS_ROLE_TO_ASSUME" || { echo "Missing repository variable AWS_ROLE_TO_ASSUME" >&2; exit 1; }
+          test -n "$APPRUNNER_SERVICE_ARN" || { echo "Missing repository variable APPRUNNER_SERVICE_ARN" >&2; exit 1; }
+
+      - name: Configure AWS credentials with OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          role-session-name: github-actions-portfolio-cicd
+          aws-region: ${{ env.AWS_REGION }}
+          mask-aws-account-id: true
 
       - name: Trigger App Runner deployment
         id: apprunner-deploy
         run: |
           operation_id="$(
             aws apprunner start-deployment \
-              --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }} \
+              --service-arn "$APPRUNNER_SERVICE_ARN" \
               --query 'OperationId' \
               --output text
           )"
@@ -179,7 +193,7 @@ jobs:
           for attempt in {1..60}; do
             status="$(
               aws apprunner list-operations \
-                --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }} \
+                --service-arn "$APPRUNNER_SERVICE_ARN" \
                 --query "OperationSummaryList[?Id=='${OPERATION_ID}'] | [0].Status" \
                 --output text
             )"
@@ -223,14 +237,12 @@ jobs:
 
       - name: Summarize deployment
         if: always()
-        env:
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
           {
             echo "## Deployment Stage"
             echo "- Commit: \`${{ github.sha }}\`"
             echo "- Repository: \`${ECR_REPOSITORY}\`"
-            echo "- App Runner service: \`${{ secrets.APPRUNNER_SERVICE_ARN }}\`"
+            echo "- App Runner service: \`${APPRUNNER_SERVICE_ARN}\`"
             echo "- Operation id: \`${{ steps.apprunner-deploy.outputs.operation_id }}\`"
             echo "- Health endpoint: \`${DEPLOY_HEALTHCHECK_URL}\`"
           } >> "$GITHUB_STEP_SUMMARY"

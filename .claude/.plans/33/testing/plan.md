@@ -97,11 +97,11 @@
   - explicit job stages so failures are easy to localize
   - GitHub Actions step summaries for build, publish, and deploy visibility
 - Document the required deployment secrets:
-  - `AWS_ACCESS_KEY_ID`
-  - `AWS_SECRET_ACCESS_KEY`
+  - `AWS_ROLE_TO_ASSUME`
   - `AWS_REGION`
   - `ECR_REPOSITORY`
   - `APPRUNNER_SERVICE_ARN`
+- Prefer GitHub OIDC with an assumable IAM role over long-lived AWS access keys.
 
 ## Delivered In This Refactor
 
@@ -110,6 +110,7 @@
 - Replaced route smoke tests with layered `unit`, `integration`, `end_to_end`, and `regression` suites.
 - Added pytest markers, coverage configuration, and marker-specific `make` targets.
 - Updated CI/CD to run fast checks broadly, full verification on `main`, build and publish the release image, trigger App Runner deployment, and perform a post-deploy health check.
+- Replaced long-lived GitHub AWS secrets with GitHub OIDC role assumption and added IAM policy templates for the deploy role.
 
 ## Verification
 

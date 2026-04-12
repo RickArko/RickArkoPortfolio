@@ -49,6 +49,7 @@ GitHub Actions provides the end-to-end CI/CD path:
 - pull requests and pushes run the fast quality gate with `make check`
 - pushes to `main` and manual `workflow_dispatch` run `make verify`
 - successful release runs build the Docker image, push it to ECR, trigger App Runner deployment, and verify the public `/health` endpoint
+- AWS authentication is handled through GitHub OIDC rather than long-lived IAM user keys
 
 - deployment runbook: [deployment/DEPLOY.md](/home/ricka/Git/RickArkoPortfolio/deployment/DEPLOY.md)
 - App Runner notes: [deployment/AppRunner.md](/home/ricka/Git/RickArkoPortfolio/deployment/AppRunner.md)

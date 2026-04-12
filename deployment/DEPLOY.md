@@ -74,13 +74,37 @@ The repository ships with an end-to-end GitHub Actions pipeline in
    - waits for the App Runner deployment operation to settle
    - performs a post-deploy health check against `https://rickarko.com/health`
 
-### Required GitHub secrets
+### Required GitHub repository variables
 
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
+OIDC removes the need for long-lived AWS access keys in GitHub.
+
+Use GitHub repository variables instead:
+
+- `AWS_ROLE_TO_ASSUME`
 - `AWS_REGION`
 - `ECR_REPOSITORY`
 - `APPRUNNER_SERVICE_ARN`
+
+### AWS OIDC setup
+
+The workflow now assumes an IAM role via GitHub OIDC instead of using
+`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+
+1. Create or confirm the AWS IAM OIDC identity provider for GitHub:
+   - provider URL: `https://token.actions.githubusercontent.com`
+   - audience: `sts.amazonaws.com`
+2. Create an IAM role for GitHub Actions.
+3. Use [deployment/aws/github-actions-oidc-trust-policy.json](/home/ricka/Git/RickArkoPortfolio/deployment/aws/github-actions-oidc-trust-policy.json) as the trust policy template.
+4. Attach [deployment/aws/github-actions-deploy-policy.json](/home/ricka/Git/RickArkoPortfolio/deployment/aws/github-actions-deploy-policy.json) after replacing the placeholders with your real account, region, repository, and App Runner service ARN.
+5. Add the following GitHub repository variables:
+   - `AWS_ROLE_TO_ASSUME`
+   - `AWS_REGION`
+   - `ECR_REPOSITORY`
+   - `APPRUNNER_SERVICE_ARN`
+6. Remove any old long-lived AWS secrets from GitHub Actions once OIDC is working.
+
+The trust policy intentionally restricts role assumption to the `main` branch.
+That matches the workflow, which only publishes and deploys from `refs/heads/main`.
 
 ### Recommended repository settings
 
@@ -88,6 +112,7 @@ The repository ships with an end-to-end GitHub Actions pipeline in
 - require the GitHub Actions quality gate before merge
 - use `workflow_dispatch` for manual redeploys when needed
 - keep App Runner pointed at the ECR repository managed by the workflow
+- prefer GitHub OIDC over stored AWS access keys
 
 ## First deploy
 
