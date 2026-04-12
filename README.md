@@ -58,6 +58,50 @@ GitHub Actions provides the end-to-end CI/CD path:
 - App Runner notes: [deployment/AppRunner.md](/home/ricka/Git/RickArkoPortfolio/deployment/AppRunner.md)
 - custom domain notes: [deployment/CustomDomain.md](/home/ricka/Git/RickArkoPortfolio/deployment/CustomDomain.md)
 
+## Ship A Release
+
+The repo supports two deployment paths:
+
+1. Preferred: GitHub Actions CI/CD
+2. Emergency/manual: local terminal deploy from WSL
+
+### Preferred release flow
+
+```bash
+make deploy-check
+git push
+```
+
+Then:
+
+1. open a pull request
+2. let GitHub Actions run `make check`
+3. merge to `main`
+4. let GitHub Actions run `make verify`, publish the image to ECR, trigger App Runner, and validate `https://rickarko.com/health`
+
+### Manual release flow
+
+Use this when you intentionally need to ship from your local machine.
+
+```bash
+make deploy-check
+make ecr-setup
+aws apprunner start-deployment --service-arn "$APPRUNNER_SERVICE_ARN" --region us-east-1
+```
+
+Then watch the deployment and verify the health contract:
+
+```bash
+watch -n 5 "aws apprunner list-operations --service-arn \"$APPRUNNER_SERVICE_ARN\" --region us-east-1 --query 'OperationSummaryList[0].[Status,Type]' --output table"
+curl -i https://rickarko.com/health
+```
+
+Success means:
+
+- App Runner operation status becomes `SUCCEEDED`
+- `/health` returns `application/json`
+- response body is `{"status":"ok"}`
+
 ## Project structure
 
 ```text
