@@ -7,7 +7,7 @@ DOMAIN ?= rickarko.com
 IMAGE_NAME ?= $(APP_NAME)
 PORT ?= 8080
 
-.PHONY: help install dev test test-fast test-unit test-integration test-e2e test-regression format format-check lint check lint-shell verify docker-build docker-run ecr-setup domain-setup domain-status domain-debug
+.PHONY: help install dev test test-fast test-unit test-integration test-e2e test-regression format format-check lint check lint-shell verify doctor-aws deploy-check docker-build docker-run ecr-setup domain-setup domain-status domain-debug
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-16s %s\n", $$1, $$2}'
@@ -55,6 +55,12 @@ lint-shell: ## Lint shell scripts with shellcheck if installed
 	fi
 
 verify: lint format-check test lint-shell ## Run the full verification steps used in this repo
+
+doctor-aws: ## Validate local AWS auth, ECR, App Runner, and domain wiring
+	APP_NAME="$(APP_NAME)" SERVICE_NAME="$(SERVICE_NAME)" AWS_REGION="$(AWS_REGION)" DOMAIN="$(DOMAIN)" ./deployment/bin/aws-doctor.sh
+
+deploy-check: check ## Run local deployment readiness checks without pushing or deploying
+	APP_NAME="$(APP_NAME)" SERVICE_NAME="$(SERVICE_NAME)" AWS_REGION="$(AWS_REGION)" DOMAIN="$(DOMAIN)" ./deployment/bin/deploy-check.sh
 
 docker-build: ## Build the Docker image locally
 	docker build -t $(IMAGE_NAME):latest .

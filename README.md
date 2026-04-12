@@ -29,6 +29,8 @@ make test-unit
 make test-integration
 make test-e2e
 make test-regression
+make doctor-aws
+make deploy-check
 make format
 make lint
 make docker-build
@@ -50,6 +52,7 @@ GitHub Actions provides the end-to-end CI/CD path:
 - pushes to `main` and manual `workflow_dispatch` run `make verify`
 - successful release runs build the Docker image, push it to ECR, trigger App Runner deployment, and verify the public `/health` endpoint
 - AWS authentication is handled through GitHub OIDC rather than long-lived IAM user keys
+- `make deploy-check` gives you a local preflight before shipping: fast quality gate, AWS wiring checks, and a Docker build without pushing
 
 - deployment runbook: [deployment/DEPLOY.md](/home/ricka/Git/RickArkoPortfolio/deployment/DEPLOY.md)
 - App Runner notes: [deployment/AppRunner.md](/home/ricka/Git/RickArkoPortfolio/deployment/AppRunner.md)

@@ -43,8 +43,14 @@ DOMAIN=rickarko.com
 ```bash
 make install
 make verify
+make doctor-aws
+make deploy-check
 make docker-build
 ```
+
+`make doctor-aws` validates your local AWS CLI identity plus ECR/App Runner/domain wiring.
+
+`make deploy-check` is a stricter no-push preflight: it runs the fast local quality gate, checks Docker availability, runs the AWS doctor, and performs a local Docker build.
 
 ## GitHub Actions CI/CD pipeline
 
