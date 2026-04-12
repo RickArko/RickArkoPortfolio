@@ -17,7 +17,7 @@ Usage: ./deployment/bin/aws-doctor.sh [options]
 Validate local AWS deployment prerequisites without changing cloud resources.
 
 Options:
-  --app-name <name>         ECR repository name (default: rickarkoportfolio)
+  --app-name <name>         ECR repository name (default: rickarko_portfolio)
   --service-name <name>     App Runner service name (default: RickArko_Portfolio)
   --service-arn <arn>       App Runner service ARN (optional)
   --region <region>         AWS region (default: us-east-1)
@@ -71,9 +71,18 @@ AWS_ARN="$(aws sts get-caller-identity --query 'Arn' --output text)"
 printf "Account: %s\nARN: %s\nRegion: %s\n\n" "$AWS_ACCOUNT_ID" "$AWS_ARN" "$AWS_REGION"
 
 section "ECR repository"
-if aws ecr describe-repositories --repository-names "$APP_NAME" --region "$AWS_REGION" >/dev/null 2>&1; then
+ecr_error_file="$(mktemp)"
+if aws ecr describe-repositories --repository-names "$APP_NAME" --region "$AWS_REGION" >/dev/null 2>"$ecr_error_file"; then
+    rm -f "$ecr_error_file"
     info "ECR repository exists: $APP_NAME"
 else
+    ecr_error="$(<"$ecr_error_file")"
+    rm -f "$ecr_error_file"
+
+    if [[ "$ecr_error" == *"AccessDenied"* || "$ecr_error" == *"not authorized"* ]]; then
+        die "Cannot inspect ECR repository '$APP_NAME'. The active AWS identity lacks ecr:DescribeRepositories permissions."
+    fi
+
     die "ECR repository not found: $APP_NAME"
 fi
 

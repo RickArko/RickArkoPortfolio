@@ -15,11 +15,11 @@ permissions:
   id-token: write
 
 env:
-  IMAGE_NAME: rickarkoportfolio
+  IMAGE_NAME: rickarko_portfolio
   PYTHON_VERSION: "3.11"
   DEPLOY_HEALTHCHECK_URL: https://rickarko.com/health
   AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
-  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY || 'rickarkoportfolio' }}
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY || 'rickarko_portfolio' }}
   APPRUNNER_SERVICE_ARN: ${{ vars.APPRUNNER_SERVICE_ARN }}
   AWS_ROLE_TO_ASSUME: ${{ vars.AWS_ROLE_TO_ASSUME }}
 
@@ -223,10 +223,20 @@ jobs:
       - name: Wait for public health endpoint
         run: |
           for attempt in {1..30}; do
-            if curl --fail --silent --show-error "$DEPLOY_HEALTHCHECK_URL" >/dev/null; then
-              echo "Health check passed on attempt ${attempt}"
-              exit 0
+            headers_file="$(mktemp)"
+            body_file="$(mktemp)"
+
+            if curl --silent --show-error --location --dump-header "$headers_file" --output "$body_file" "$DEPLOY_HEALTHCHECK_URL"; then
+              content_type="$(awk 'BEGIN { IGNORECASE = 1 } /^content-type:/ { print $2 }' "$headers_file" | tr -d '\r')"
+
+              if [[ "$content_type" == application/json* ]] && grep -q '"status"[[:space:]]*:[[:space:]]*"ok"' "$body_file"; then
+                echo "Health check passed on attempt ${attempt}"
+                rm -f "$headers_file" "$body_file"
+                exit 0
+              fi
             fi
+
+            rm -f "$headers_file" "$body_file"
 
             echo "Health check attempt ${attempt}/30 failed; retrying in 10 seconds..."
             sleep 10

@@ -32,7 +32,7 @@ shellcheck --version
 These can be passed through the environment when needed:
 
 ```bash
-APP_NAME=rickarkoportfolio
+APP_NAME=rickarko_portfolio
 SERVICE_NAME=RickArko_Portfolio
 AWS_REGION=us-east-1
 DOMAIN=rickarko.com
@@ -79,6 +79,7 @@ The repository ships with an end-to-end GitHub Actions pipeline in
    - triggers `aws apprunner start-deployment`
    - waits for the App Runner deployment operation to settle
    - performs a post-deploy health check against `https://rickarko.com/health`
+   - validates that the endpoint returns the JSON health contract, not just an HTTP `200`
 
 ### Required GitHub repository variables
 

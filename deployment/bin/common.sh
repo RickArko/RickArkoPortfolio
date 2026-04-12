@@ -3,7 +3,7 @@
 SCRIPT_DIR="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
 
-readonly APP_NAME_DEFAULT="rickarkoportfolio"
+readonly APP_NAME_DEFAULT="rickarko_portfolio"
 readonly SERVICE_NAME_DEFAULT="RickArko_Portfolio"
 readonly AWS_REGION_DEFAULT="us-east-1"
 readonly DOMAIN_DEFAULT="rickarko.com"

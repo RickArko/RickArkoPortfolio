@@ -1,6 +1,6 @@
 SHELL := bash
 
-APP_NAME ?= rickarkoportfolio
+APP_NAME ?= rickarko_portfolio
 SERVICE_NAME ?= RickArko_Portfolio
 AWS_REGION ?= us-east-1
 DOMAIN ?= rickarko.com
@@ -65,7 +65,7 @@ deploy-check: check ## Run local deployment readiness checks without pushing or 
 docker-build: ## Build the Docker image locally
 	docker build -t $(IMAGE_NAME):latest .
 
-docker-run: ## Run the Docker image locally
+docker-run: docker-build ## Build (if needed) and run the Docker image locally
 	docker run --rm -p $(PORT):8080 $(IMAGE_NAME):latest
 
 ecr-setup: ## Build, tag, and push the image to ECR
