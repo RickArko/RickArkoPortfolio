@@ -1,45 +1,56 @@
 # Rick Arko Portfolio Website
-Personal portfolio website built with Flask showcasing ML projects and experience.
 
-## 🚀 Quick Start
+Flask portfolio site for Rick Arko, positioned as an AI/ML consultant and founder profile.
 
-### Local Development (w/o Docker)
+## Linux-first workflow
+
+This repository now treats Bash as the only supported automation layer.
+
+- use the top-level `Makefile`
+- use Bash scripts from `deployment/bin/`
+- if you are on Windows, run the repo through WSL
+- old PowerShell scripts live in `deployment/windows/legacy/` and are deprecated
+
+## Quick start
+
 ```bash
-uv sync --dev
-uv run src/app.py
+make install
+make dev
 ```
 
-### Docker
+The local app runs on `http://localhost:8080`.
+
+## Common commands
+
 ```bash
-# Build and run
-docker build -t rickarkoportfolio .
-docker run -p 8080:8080 rickarkoportfolio
+make test
+make format
+make docker-build
+make docker-run
+make ecr-setup
+make domain-setup
+make domain-status
 ```
 
-## 🌐 Deployment
+Run `make help` to see the full target list.
 
-### AWS App Runner (Recommended)
-1. Push code to GitHub
-2. Connect repository to AWS App Runner
-3. App Runner automatically uses `apprunner.yaml` configuration
-4. Automatic HTTPS and scaling included
+## Deployment
 
-### AWS EC2
-1. Launch Ubuntu 22.04 instance
-2. Install dependencies and clone repository
-3. Use systemd service in `deployment/` folder
-4. Configure nginx for reverse proxy
+The primary deployment target is AWS App Runner backed by ECR and Route 53.
 
-### AWS ECS/Fargate
-1. Push Docker image to ECR
-2. Use task definition in `deployment/ecs-task-definition.json`
-3. Create ECS service with Application Load Balancer
+- deployment runbook: [deployment/DEPLOY.md](/home/ricka/Git/RickArkoPortfolio/deployment/DEPLOY.md)
+- App Runner notes: [deployment/AppRunner.md](/home/ricka/Git/RickArkoPortfolio/deployment/AppRunner.md)
+- custom domain notes: [deployment/CustomDomain.md](/home/ricka/Git/RickArkoPortfolio/deployment/CustomDomain.md)
 
-## 📁 Project Structure
-```
-├── src/                # Flask application
-├── deployment/         # Deployment configurations
-├── Dockerfile          # Container configuration
-├── apprunner.yaml      # AWS App Runner configuration
-└── pyproject.toml      # Python dependencies
+## Project structure
+
+```text
+.
+├── src/                  Flask app, templates, and JSON content
+├── tests/                Route smoke tests
+├── deployment/bin/       Linux-first deployment scripts
+├── deployment/windows/   Archived Windows legacy scripts
+├── Dockerfile            Container build
+├── apprunner.yaml        AWS App Runner config
+└── Makefile              Main local/deployment entrypoint
 ```

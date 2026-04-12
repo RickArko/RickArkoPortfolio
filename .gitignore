@@ -22,3 +22,6 @@ logs/
 
 .keys/
 deployment/fargate/
+
+# Claude
+.claude/.*
