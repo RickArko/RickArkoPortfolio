@@ -3,7 +3,7 @@ runtime: docker
 
 run:
   runtime-version: latest
-  command: uv run gunicorn -w 4 -b 0.0.0.0:8080 --chdir src app:app
+  command: uv run gunicorn -w 4 -b 0.0.0.0:8080 --pythonpath src rickarko_portfolio.wsgi:app
   network:
     port: 8080
   env:

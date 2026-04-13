@@ -1,28 +1,27 @@
 {% extends 'base.html' %}
 
-{% block title %} Blog {% endblock %}
-
 {% block content %}
+<section class="page-intro section section--compact">
+    <p class="section-eyebrow" data-reveal>Insights</p>
+    <h1 data-reveal>{{ context.insights.title }}</h1>
+    <p class="page-intro__copy" data-reveal>{{ context.insights.description }}</p>
+</section>
 
-<div class = "row">
-    <div class = "col-sm-12">
-        <span class="heading-meta">Blog</span>
-        <h2 class="heading">Recent articles</h2>
+<section class="section section--compact">
+    <div class="card-grid">
+        {% for topic in context.insights.topics %}
+        <article class="insight-card card" data-reveal>
+            <p>{{ topic }}</p>
+        </article>
+        {% endfor %}
     </div>
-</div>
-<div class = "container-fluid">
-    <div class = row>
-        <div class = "col-xl-3"></div>
-        <div class = "col-xl-6 text-center">
-            <h2> Blog in Progress </h2>
-            <h4 class = "p-4"> When I get around to publishing some articles you'll be able to read them here. In the meantime you can enjoy my saved stories.
-            </h4>
-            <a href = "https://medium.com/@rickarko/"> 
-                <button class = "btn btn-primary"> @rickarko on Medium </button>
-            </a>
-        </div>
-        <div class = "col-xl-3"></div>
-    </div>
-</div>
+</section>
 
+<section class="cta-band" data-reveal>
+    <div>
+        <p class="section-eyebrow">Current home for writing</p>
+        <h2>Longer-form posts live on Medium while I expand the on-site content library.</h2>
+    </div>
+    <a class="button button--secondary" href="{{ site.medium_url }}" target="_blank" rel="noreferrer">Read on Medium</a>
+</section>
 {% endblock %}

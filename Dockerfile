@@ -12,7 +12,7 @@ ENV PATH="/root/.local/bin:$PATH"
 WORKDIR /opt/portfolio
 
 COPY pyproject.toml uv.lock ./
-RUN uv sync --no-dev
+RUN uv sync --frozen --no-dev --no-install-project
 
 # --- Stage 2: Runtime ---
 FROM python:3.11-slim
@@ -38,11 +38,10 @@ RUN groupadd -r appuser && useradd -r -g appuser -d /opt/portfolio appuser \
     && chown -R appuser:appuser /opt/portfolio
 USER appuser
 
-# Set working directory for module imports
-WORKDIR /opt/portfolio/src
+WORKDIR /opt/portfolio
 
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
     CMD curl -f http://localhost:8080/health || exit 1
 
 EXPOSE 8080
-CMD ["/opt/portfolio/.venv/bin/gunicorn", "-c", "/opt/portfolio/deployment/gunicorn-conf.py", "app:app"]
+CMD ["/opt/portfolio/.venv/bin/gunicorn", "-c", "/opt/portfolio/deployment/gunicorn-conf.py", "rickarko_portfolio.wsgi:app"]

@@ -1,53 +1,78 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with this repository.
 
 ## Project Overview
 
-Flask-based personal portfolio website for Rick Arko. Serves pages with JSON-backed content (no database). Deployed via Docker on AWS App Runner.
+Flask-based personal portfolio website for Rick Arko. Content is JSON-backed and rendered with Jinja templates. The site is deployed via Docker on AWS App Runner.
 
-- **Live:** https://rickarko.com (also https://www.rickarko.com)
+- **Live:** https://rickarko.com
 - **App Runner URL:** https://ctydyem9cj.us-east-1.awsapprunner.com
 - **Region:** us-east-1
+
+## Linux-first workflow
+
+This repo is Linux-first.
+
+- use Bash and the top-level `Makefile`
+- use WSL on Windows instead of native PowerShell
+- treat `deployment/windows/legacy/` as archived reference material only
 
 ## Development Commands
 
 ```bash
 # Install dependencies
-uv sync --dev
+make install
 
 # Run locally (debug mode, port 8080)
-uv run src/app.py
+make dev
+
+# Fast layered test runs
+make test-fast
+make test-unit
+make test-integration
+make test-e2e
+make test-regression
 
 # Run with Docker
-docker build -t rickarkoportfolio .
-docker run -p 8080:8080 rickarkoportfolio
+make docker-build
+make docker-run
 
-# Production server (gunicorn)
-uv run gunicorn -w 4 -b 0.0.0.0:8080 --chdir src app:app
-
-# Format code
-uv run black src/
-uv run isort src/
+# Format and lint
+make format
+make lint
 
 # Run tests
-uv run pytest
+make test
+```
+
+## Deployment Commands
+
+```bash
+# Build and push the image to ECR
+make ecr-setup
+
+# Associate or repair the custom domain in App Runner / Route 53
+make domain-setup
+
+# Inspect current custom-domain status
+make domain-status
 ```
 
 ## Architecture
 
-**Stack:** Python 3.11, Flask, Gunicorn, Jinja2 templates, Bootstrap 4, jQuery. Package management via `uv`.
+**Stack:** Python 3.11, Flask, Gunicorn, Jinja2 templates, custom CSS/JS, package management via `uv`.
 
-**Entry point:** `src/app.py` — defines Flask routes and exposes `application = app` for WSGI servers.
+**Package entrypoint:** `src/rickarko_portfolio/factory.py` owns the Flask app factory. `src/rickarko_portfolio/wsgi.py` exposes `app` and `application` for WSGI servers. `python -m rickarko_portfolio` is the canonical local dev entrypoint. `src/app.py` is now a temporary compatibility shim.
 
-**Routes:** `/` (home), `/experience/`, `/projects/`, `/blog/` — each loads data from `src/db/*.json` and renders a Jinja2 template. 404 has a custom handler.
+**Routes:** `/`, `/experience/`, `/projects/`, `/blog/`, `/contact/`, `/health`, `/robots.txt`, `/sitemap.xml`.
 
-**Data layer:** No database. Portfolio content lives in `src/db/` as JSON files (`home.json`, `experience.json`, `projects.json`, `contact.json`). Routes load these via paths resolved in `src/constants.py`.
+**Data layer:** No database. Portfolio content lives in `src/db/` as JSON files and is loaded through typed helpers in `src/rickarko_portfolio/content.py`.
 
-**Path resolution:** `src/constants.py` uses `get_data_dir()` to locate `db/` relative to the file, CWD, or `src/` subdirectory — this handles running from different contexts (Docker, local, gunicorn).
+**Templates:** `src/templates/base.html` is the main layout. Static assets live in `src/static/`.
 
-**Templates:** `src/templates/base.html` is the master layout with sidebar nav. Pages extend it. Static assets in `src/static/`.
+**Deployment:** `Dockerfile` builds the app image. `apprunner.yaml` configures AWS App Runner. Linux-first deployment scripts live in `deployment/bin/`.
 
-**Deployment:** `Dockerfile` builds with `python:3.10-slim` + uv. `apprunner.yaml` configures AWS App Runner (docker runtime, port 8080). `deployment/gunicorn-conf.py` provides production gunicorn config with dynamic worker count.
+**Testing:** Pytest is the only test runner. The suite is split into `tests/unit`, `tests/integration`, `tests/end_to_end`, and `tests/regression`, with coverage enforced against the `rickarko_portfolio` package.
 
 **Image utilities:** `src/resize_profile_image.py` uses Pillow to crop profile images and generate favicons.

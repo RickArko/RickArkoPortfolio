@@ -1,54 +1,132 @@
 {
-    "about": "Rick Arko is a Data Scientist, Python/ML Engineer, and Analytics Leader who specializes in building scalable ML systems for Supply Chain, E-Commerce, and ARM/FinTech. I've led projects in forecasting, ETA prediction, pricing, and inventory optimization, with full-stack expertise spanning data analysis, engineering, deployment, stakeholder communication and executive presentation. I am passionate about solving real problems and delivering positive, ethical impact.",
-
-    "skills": {
-        "1": {
-            "name": "Python",
-            "percentage": "95%",
-            "color": "#3776ab",
-            "icon": "fa-brands fa-python"
+    "profile": {
+        "name": "Rick Arko",
+        "headline": "AI/ML Consultant, Founder, and Applied AI Builder",
+        "short_tagline": "I help founders and operating teams turn AI ideas into reliable products, decision systems, and production-ready workflows.",
+        "email": "rick.arko17@gmail.com",
+        "linkedin_url": "https://www.linkedin.com/in/rickarko",
+        "github_url": "https://github.com/RickArko",
+        "medium_url": "https://medium.com/@rickarko/",
+        "availability": "Available for consulting, fractional AI leadership, and founder collaborations.",
+        "location": "United States"
+    },
+    "hero": {
+        "eyebrow": "Applied AI strategy + execution",
+        "headline": "Ship AI products that create leverage, not prototypes that die in a demo.",
+        "subheadline": "I work with founders, operators, and product teams to build practical AI systems across LLMs, forecasting, pricing, recommendation, and automation. The focus is always the same: clear business outcomes, clean implementation, and production reliability.",
+        "primary_cta": {
+            "label": "Work With Me",
+            "href": "/contact/"
         },
-        "2": {
-            "name": "Machine Learning",
-            "percentage": "95%",
-            "color": "#e74c3c",
-            "icon": "fas fa-brain"
+        "secondary_cta": {
+            "label": "See Selected Work",
+            "href": "/projects/"
         },
-        "3": {
-            "name": "SQL",
-            "percentage": "90%",
-            "color": "#f39c12",
-            "icon": "fa-solid fa-database"
+        "highlights": [
+            "LLM product strategy, RAG, evaluation, and workflow automation",
+            "Forecasting, pricing, recommendation, and operational decision systems",
+            "Fractional AI leadership for teams that need both strategy and execution"
+        ]
+    },
+    "stats": [
+        {
+            "value": "10+",
+            "label": "years building applied ML systems in production"
         },
-        "4": {
-            "name": "Git",
-            "percentage": "90%",
-            "color": "#2c3e50",
-            "icon": "fa-brands fa-github"
+        {
+            "value": "Enterprise",
+            "label": "experience across logistics, e-commerce, fintech, and operations"
         },
-        "5": {
-            "name": "Azure",
-            "percentage": "85%",
-            "color": "#0078d4",
-            "icon": "fa-brands fa-windows"
-        },
-        "6": {
-            "name": "Statistical Analysis and Modeling",
-            "percentage": "85%",
-            "color": "#27ae60",
-            "icon": "fas fa-chart-line"
-        },
-        "7": {
-            "name": "Docker",
-            "percentage": "80%",
-            "color": "#2496ed",
-            "icon": "fa-brands fa-docker"
-        },
-        "8": {
-            "name": "R, RStudio(Posit)",
-            "percentage": "65%",
-            "color": "#9b59b6",
-            "icon": "fa-solid fa-r"
+        {
+            "value": "0 to 1 + Scale",
+            "label": "builder mindset from prototype architecture through deployment"
         }
+    ],
+    "about": [
+        "I am an AI and machine learning consultant with a hands-on background in forecasting, pricing, recommendation systems, and production data products. I have spent the last decade building systems that have to work in messy, high-stakes environments where reliability matters more than novelty.",
+        "Today I help teams navigate the shift from classic ML to modern AI. That can mean shaping an AI roadmap, designing a grounded LLM workflow, standing up evaluation and observability, improving an existing model stack, or helping a founding team turn an idea into a focused, shippable product.",
+        "My style is pragmatic, technical, and business-aware. I like working closely with decision-makers, shipping quickly, and building systems that are understandable enough to maintain once the first launch excitement wears off."
+    ],
+    "services": [
+        {
+            "title": "AI Strategy and Roadmaps",
+            "icon": "fa-solid fa-compass-drafting",
+            "description": "Clarify where AI fits, which use cases deserve investment, what the architecture should look like, and how to sequence execution without overcommitting too early."
+        },
+        {
+            "title": "LLM Products and Workflow Automation",
+            "icon": "fa-solid fa-robot",
+            "description": "Design grounded assistants, retrieval workflows, internal knowledge tools, and process automation that respect latency, cost, security, and trust."
+        },
+        {
+            "title": "Applied ML Systems",
+            "icon": "fa-solid fa-chart-line",
+            "description": "Build or improve forecasting, pricing, recommendation, scoring, and optimization systems with an emphasis on measurable business impact."
+        },
+        {
+            "title": "Fractional AI Leadership",
+            "icon": "fa-solid fa-people-group",
+            "description": "Partner with founders or product leaders on technical direction, vendor evaluation, hiring, team mentoring, and go-to-production execution."
+        }
+    ],
+    "expertise": [
+        {
+            "title": "LLM Systems",
+            "description": "Retrieval-augmented generation, prompt workflows, source-grounded answers, evaluation loops, and internal copilots."
+        },
+        {
+            "title": "Production Machine Learning",
+            "description": "Forecasting, regression, classification, recommendation, anomaly detection, and experimentation in real operating environments."
+        },
+        {
+            "title": "Decision Infrastructure",
+            "description": "Pricing services, operational planning tools, automation pipelines, and data products that have to support live business decisions."
+        },
+        {
+            "title": "Technical Translation",
+            "description": "Bridging founders, executives, operators, analysts, and engineers so that complex systems are usable, trusted, and aligned with the business."
+        }
+    ],
+    "wins": [
+        {
+            "title": "Scaled network forecasting",
+            "impact": "Improved site-level error from 30%+ to under 15% by replacing hundreds of bespoke models with a more scalable ML approach.",
+            "summary": "Built forecasting systems that could survive constant network change, new locations, new product launches, and noisy operational data."
+        },
+        {
+            "title": "Made pricing models more usable",
+            "impact": "Matched ensemble-level performance using only five common shipment features, making live pricing services far easier to operationalize.",
+            "summary": "Focused on practical model design, latency, interpretability, and business continuity in environments where downtime is expensive."
+        },
+        {
+            "title": "Led through ambiguity",
+            "impact": "Helped grow teams, mentor junior talent, and translate technical work into decisions that stakeholders could actually act on.",
+            "summary": "Strong projects need more than model quality; they need communication, trust, and systems people can operate."
+        }
+    ],
+    "engagements": [
+        {
+            "title": "Founder Sprint",
+            "description": "A focused engagement for early-stage teams exploring AI product ideas, architecture, or MVP scoping."
+        },
+        {
+            "title": "Fractional AI Partner",
+            "description": "Ongoing support for teams that need senior technical judgment without a full-time AI executive hire."
+        },
+        {
+            "title": "Build With Your Team",
+            "description": "Hands-on implementation, review, and coaching alongside product, engineering, or analytics teams."
+        }
+    ],
+    "insights": {
+        "title": "Topics I like writing and speaking about",
+        "description": "I am especially interested in the practical edge where ambitious AI ideas meet messy systems, real users, and actual business constraints.",
+        "topics": [
+            "How to decide whether a use case needs an LLM, classic ML, or better product design",
+            "What makes RAG systems feel trustworthy instead of fragile",
+            "Evaluation patterns for AI features that touch real customer workflows",
+            "Why forecasting and operational ML still matter in the age of generative AI",
+            "How founders can avoid expensive AI platform detours early on"
+        ]
     }
 }

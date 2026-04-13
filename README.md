@@ -1,45 +1,134 @@
 # Rick Arko Portfolio Website
-Personal portfolio website built with Flask showcasing ML projects and experience.
 
-## 🚀 Quick Start
+Flask portfolio site for Rick Arko, positioned as an AI/ML consultant and founder profile.
 
-### Local Development (w/o Docker)
+## Linux-first workflow
+
+This repository now treats Bash as the only supported automation layer.
+
+- use the top-level `Makefile`
+- use Bash scripts from `deployment/bin/`
+- if you are on Windows, run the repo through WSL
+- old PowerShell scripts live in `deployment/windows/legacy/` and are deprecated
+
+## Quick start
+
 ```bash
-uv sync --dev
-uv run src/app.py
+make install
+make dev
 ```
 
-### Docker
+The local app runs on `http://localhost:8080`.
+
+## Common commands
+
 ```bash
-# Build and run
-docker build -t rickarkoportfolio .
-docker run -p 8080:8080 rickarkoportfolio
+make test
+make test-fast
+make test-unit
+make test-integration
+make test-e2e
+make test-regression
+make doctor-aws
+make deploy-check
+make format
+make lint
+make docker-build
+make docker-run
+make ecr-setup
+make domain-setup
+make domain-status
 ```
 
-## 🌐 Deployment
+Run `make help` to see the full target list.
 
-### AWS App Runner (Recommended)
-1. Push code to GitHub
-2. Connect repository to AWS App Runner
-3. App Runner automatically uses `apprunner.yaml` configuration
-4. Automatic HTTPS and scaling included
+## Deployment
 
-### AWS EC2
-1. Launch Ubuntu 22.04 instance
-2. Install dependencies and clone repository
-3. Use systemd service in `deployment/` folder
-4. Configure nginx for reverse proxy
+The primary deployment target is AWS App Runner backed by ECR and Route 53.
 
-### AWS ECS/Fargate
-1. Push Docker image to ECR
-2. Use task definition in `deployment/ecs-task-definition.json`
-3. Create ECS service with Application Load Balancer
+GitHub Actions provides the end-to-end CI/CD path:
 
-## 📁 Project Structure
+- pull requests and pushes run the fast quality gate with `make check`
+- pushes to `main` and manual `workflow_dispatch` run `make verify`
+- successful release runs build the Docker image, push it to ECR, trigger App Runner deployment, and verify the public `/health` endpoint
+- AWS authentication is handled through GitHub OIDC rather than long-lived IAM user keys
+- `make deploy-check` gives you a local preflight before shipping: fast quality gate, AWS wiring checks, and a Docker build without pushing
+
+- deployment runbook: [deployment/DEPLOY.md](/home/ricka/Git/RickArkoPortfolio/deployment/DEPLOY.md)
+- App Runner notes: [deployment/AppRunner.md](/home/ricka/Git/RickArkoPortfolio/deployment/AppRunner.md)
+- custom domain notes: [deployment/CustomDomain.md](/home/ricka/Git/RickArkoPortfolio/deployment/CustomDomain.md)
+
+## Ship A Release
+
+The repo supports two deployment paths:
+
+1. Preferred: GitHub Actions CI/CD
+2. Emergency/manual: local terminal deploy from WSL
+
+### Preferred release flow
+
+```bash
+make deploy-check
+git push
 ```
-├── src/                # Flask application
-├── deployment/         # Deployment configurations
-├── Dockerfile          # Container configuration
-├── apprunner.yaml      # AWS App Runner configuration
-└── pyproject.toml      # Python dependencies
+
+Then:
+
+1. open a pull request
+2. let GitHub Actions run `make check`
+3. merge to `main`
+4. let GitHub Actions run `make verify`, publish the image to ECR, trigger App Runner, and validate `https://rickarko.com/health`
+
+### Manual release flow
+
+Use this when you intentionally need to ship from your local machine.
+
+```bash
+make deploy-check
+make ecr-setup
+aws apprunner start-deployment --service-arn "$APPRUNNER_SERVICE_ARN" --region us-east-1
 ```
+
+Then watch the deployment and verify the health contract:
+
+```bash
+watch -n 5 "aws apprunner list-operations --service-arn \"$APPRUNNER_SERVICE_ARN\" --region us-east-1 --query 'OperationSummaryList[0].[Status,Type]' --output table"
+curl -i https://rickarko.com/health
+```
+
+Success means:
+
+- App Runner operation status becomes `SUCCEEDED`
+- `/health` returns `application/json`
+- response body is `{"status":"ok"}`
+
+## Project structure
+
+```text
+.
+├── src/
+│   ├── rickarko_portfolio/  Installable Flask package, app factory, SEO, config
+│   ├── db/                  JSON-backed site content
+│   ├── templates/           Jinja templates
+│   └── static/              CSS, JS, and images
+├── tests/
+│   ├── unit/                Pure helper and config tests
+│   ├── integration/         App factory and wiring tests
+│   ├── end_to_end/          HTTP-first rendered route tests
+│   └── regression/          Deployment/runtime contract tests
+├── deployment/bin/       Linux-first deployment scripts
+├── deployment/windows/   Archived Windows legacy scripts
+├── Dockerfile            Container build
+├── apprunner.yaml        AWS App Runner config
+└── Makefile              Main local/deployment entrypoint
+```
+
+## Testing philosophy
+
+The repo uses pytest as the single test runner and treats "end to end" as
+HTTP-first validation of the real Flask application, not browser automation.
+
+- `make test-fast` covers unit and integration paths for quick iteration
+- `make test-e2e` exercises public rendered pages and crawlability contracts
+- `make test-regression` protects WSGI, entrypoint, and deployment-sensitive behavior
+- `make test` runs the full suite with coverage enforcement on the Python package
