@@ -1,31 +1,31 @@
 {
     "profile": {
         "name": "Rick Arko",
-        "headline": "AI/ML Consultant, Founder, and Applied AI Builder",
-        "short_tagline": "I help founders and operating teams turn AI ideas into reliable products, decision systems, and production-ready workflows.",
+        "headline": "Applied AI/ML Builder and Senior Data Scientist",
+        "short_tagline": "I build production ML systems, practical AI workflows, and decision tools that real teams can trust.",
         "email": "rick.arko17@gmail.com",
         "linkedin_url": "https://www.linkedin.com/in/rickarko",
         "github_url": "https://github.com/RickArko",
         "medium_url": "https://medium.com/@rickarko/",
-        "availability": "Available for consulting, fractional AI leadership, and founder collaborations.",
+        "availability": "Open to senior applied AI/ML roles, staff-level data science opportunities, and selective consulting.",
         "location": "United States"
     },
     "hero": {
-        "eyebrow": "Applied AI strategy + execution",
-        "headline": "Ship AI products that create leverage, not prototypes that die in a demo.",
-        "subheadline": "I work with founders, operators, and product teams to build practical AI systems across LLMs, forecasting, pricing, recommendation, and automation. The focus is always the same: clear business outcomes, clean implementation, and production reliability.",
+        "eyebrow": "Experienced builder, open to the right next opportunity",
+        "headline": "I build production ML systems and practical AI products that teams can actually use.",
+        "subheadline": "Over the last decade I have worked across forecasting, pricing, recommendation, and operational ML in production settings. I am now looking for the next chapter: strong teams, meaningful problems, and opportunities where hands-on technical judgment still matters.",
         "primary_cta": {
-            "label": "Work With Me",
-            "href": "/contact/"
+            "label": "See Experience",
+            "href": "/experience/"
         },
         "secondary_cta": {
-            "label": "See Selected Work",
-            "href": "/projects/"
+            "label": "Get in Touch",
+            "href": "/contact/"
         },
         "highlights": [
-            "LLM product strategy, RAG, evaluation, and workflow automation",
-            "Forecasting, pricing, recommendation, and operational decision systems",
-            "Fractional AI leadership for teams that need both strategy and execution"
+            "10+ years across forecasting, pricing, recommendation, and operational ML in production",
+            "Strong at bridging technical depth, product judgment, and stakeholder trust",
+            "Open to senior IC, lead, and selective consulting opportunities"
         ]
     },
     "stats": [
@@ -43,30 +43,30 @@
         }
     ],
     "about": [
-        "I am an AI and machine learning consultant with a hands-on background in forecasting, pricing, recommendation systems, and production data products. I have spent the last decade building systems that have to work in messy, high-stakes environments where reliability matters more than novelty.",
-        "Today I help teams navigate the shift from classic ML to modern AI. That can mean shaping an AI roadmap, designing a grounded LLM workflow, standing up evaluation and observability, improving an existing model stack, or helping a founding team turn an idea into a focused, shippable product.",
-        "My style is pragmatic, technical, and business-aware. I like working closely with decision-makers, shipping quickly, and building systems that are understandable enough to maintain once the first launch excitement wears off."
+        "I am an applied machine learning builder with a hands-on background in forecasting, pricing, recommendation systems, and production data products. Most of my work has lived in environments where reliability, clarity, and operational usefulness matter more than hype.",
+        "I enjoy turning ambiguous business problems into systems that actually ship. That can mean designing a grounded LLM workflow, improving an existing model stack, building better evaluation loops, or helping a team move from prototype thinking to dependable production behavior.",
+        "Right now I am especially interested in the next role or collaboration where I can contribute as a senior builder: close to the work, close to the stakeholders, and focused on useful outcomes."
     ],
     "services": [
         {
-            "title": "AI Strategy and Roadmaps",
+            "title": "Applied AI Product Design",
             "icon": "fa-solid fa-compass-drafting",
-            "description": "Clarify where AI fits, which use cases deserve investment, what the architecture should look like, and how to sequence execution without overcommitting too early."
+            "description": "Turn fuzzy ideas into scoped, useful products and decision engines, with clear user value, realistic architecture, and a path to delivery."
         },
         {
-            "title": "LLM Products and Workflow Automation",
+            "title": "LLM Workflows and Evaluation",
             "icon": "fa-solid fa-robot",
-            "description": "Design grounded assistants, retrieval workflows, internal knowledge tools, and process automation that respect latency, cost, security, and trust."
+            "description": "Design grounded assistants, retrieval workflows, internal knowledge tools, and evaluation loops with an eye on trust, cost, and maintainability."
         },
         {
-            "title": "Applied ML Systems",
+            "title": "Production ML Systems",
             "icon": "fa-solid fa-chart-line",
             "description": "Build or improve forecasting, pricing, recommendation, scoring, and optimization systems with an emphasis on measurable business impact."
         },
         {
-            "title": "Fractional AI Leadership",
+            "title": "Technical Leadership",
             "icon": "fa-solid fa-people-group",
-            "description": "Partner with founders or product leaders on technical direction, vendor evaluation, hiring, team mentoring, and go-to-production execution."
+            "description": "Bring senior technical judgment, mentoring, prioritization, and cross-functional translation without drifting away from hands-on execution."
         }
     ],
     "expertise": [
@@ -84,7 +84,7 @@
         },
         {
             "title": "Technical Translation",
-            "description": "Bridging founders, executives, operators, analysts, and engineers so that complex systems are usable, trusted, and aligned with the business."
+            "description": "Bridging product, engineering, operators, analysts, and leadership so complex systems stay usable, trusted, and aligned with the business."
         }
     ],
     "wins": [
@@ -106,16 +106,16 @@
     ],
     "engagements": [
         {
-            "title": "Founder Sprint",
-            "description": "A focused engagement for early-stage teams exploring AI product ideas, architecture, or MVP scoping."
+            "title": "Senior IC or Staff-Level Role",
+            "description": "A strong fit if you need someone who can own messy ML and AI problems end to end while collaborating well across product, engineering, and operations."
         },
         {
-            "title": "Fractional AI Partner",
-            "description": "Ongoing support for teams that need senior technical judgment without a full-time AI executive hire."
+            "title": "Technical Lead or Early AI Hire",
+            "description": "Useful for teams that want a pragmatic builder who can shape direction, mentor others, and still stay close to the code and systems."
         },
         {
-            "title": "Build With Your Team",
-            "description": "Hands-on implementation, review, and coaching alongside product, engineering, or analytics teams."
+            "title": "Selective Consulting",
+            "description": "Available for focused advisory or build engagements when the problem is a strong fit and the work is meaningful."
         }
     ],
     "insights": {
@@ -126,7 +126,7 @@
             "What makes RAG systems feel trustworthy instead of fragile",
             "Evaluation patterns for AI features that touch real customer workflows",
             "Why forecasting and operational ML still matter in the age of generative AI",
-            "How founders can avoid expensive AI platform detours early on"
+            "How teams can avoid expensive AI platform detours early on"
         ]
     }
 }

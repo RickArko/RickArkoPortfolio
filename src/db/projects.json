@@ -2,7 +2,7 @@
     "summary": {
         "eyebrow": "Selected work",
         "title": "A mix of private case studies, public experiments, and product-minded builds.",
-        "description": "The strongest applied AI work often happens inside private operating environments, so this page combines representative enterprise outcomes with public code that shows how I think and build."
+        "description": "A lot of strong applied AI work happens inside private operating environments, so this page combines representative enterprise outcomes with public code and experiments that show how I think and build."
     },
     "projects": {
         "1": {
@@ -97,9 +97,9 @@
         "6": {
             "title": "Portfolio Platform",
             "category": "Public build",
-            "engagement_type": "Brand + SEO infrastructure",
-            "description": "This site itself: a lightweight Flask application that presents consulting positioning, structured SEO metadata, and a modern profile for AI/ML work.",
-            "impact": "Designed to communicate clearly with both human buyers and search crawlers while staying easy to maintain.",
+            "engagement_type": "Personal platform",
+            "description": "This site itself: a lightweight Flask application that presents a grounded professional profile, structured SEO metadata, and a maintainable foundation for future writing and project work.",
+            "impact": "Designed to communicate clearly with both humans and search crawlers while staying easy to update over time.",
             "image": "/static/images/project-logos/Portfolio.png",
             "logo_text": "WEB",
             "accent": "#4338ca",

@@ -28,18 +28,19 @@ PAGE_DEFINITIONS = {
         slug="home",
         label="Home",
         path="/",
-        title="Rick Arko | AI/ML Consultant, Founder, and Applied AI Builder",
+        title="Rick Arko | Applied AI/ML Builder and Senior Data Scientist",
         description=(
-            "Rick Arko helps founders and operating teams design, build, and ship "
-            "production-ready AI, LLM, and machine learning systems."
+            "Rick Arko is an experienced machine learning builder focused on "
+            "production AI, forecasting, pricing, recommendation systems, and "
+            "practical LLM workflows."
         ),
         keywords=(
-            "AI consultant",
-            "ML consultant",
-            "LLM consultant",
-            "fractional AI lead",
+            "applied AI",
+            "senior data scientist",
             "machine learning engineer",
-            "AI founder",
+            "LLM systems",
+            "machine learning engineer",
+            "production machine learning",
         ),
     ),
     "experience": PageDefinition(
@@ -64,8 +65,8 @@ PAGE_DEFINITIONS = {
         path="/projects/",
         title="Selected Work | Rick Arko",
         description=(
-            "Selected consulting-style case studies, experiments, and production "
-            "AI/ML work from Rick Arko."
+            "Selected case studies, experiments, and production AI/ML work from "
+            "Rick Arko."
         ),
         keywords=(
             "AI case studies",
@@ -94,16 +95,16 @@ PAGE_DEFINITIONS = {
         slug="contact",
         label="Contact",
         path="/contact/",
-        title="Work With Rick Arko",
+        title="Connect With Rick Arko",
         description=(
-            "Get in touch with Rick Arko about AI strategy, LLM product work, "
-            "fractional AI leadership, or hands-on machine learning consulting."
+            "Reach out to Rick Arko about senior applied AI and machine learning "
+            "opportunities, thoughtful collaborations, or selective consulting work."
         ),
         keywords=(
-            "hire AI consultant",
-            "fractional AI leadership",
+            "applied AI opportunities",
+            "senior data scientist",
+            "machine learning leadership",
             "LLM implementation",
-            "machine learning advisory",
         ),
     ),
     "404": PageDefinition(
@@ -154,33 +155,20 @@ def build_home_schema(settings: Settings | None = None) -> dict[str, Any]:
                 ],
             },
             {
-                "@type": "ProfessionalService",
-                "@id": f"{resolved_settings.site_url}/#service",
-                "name": "Rick Arko AI/ML Consulting",
-                "url": resolved_settings.site_url,
-                "image": resolved_settings.site_image_url,
-                "description": (
-                    "AI and machine learning consulting for founders and operating "
-                    "teams shipping LLM products, decision systems, and production ML."
-                ),
-                "founder": {"@id": f"{resolved_settings.site_url}/#person"},
-                "areaServed": "United States",
-                "serviceType": [
-                    "AI strategy",
-                    "LLM implementation",
-                    "Retrieval augmented generation",
-                    "Machine learning systems",
-                    "Fractional AI leadership",
-                ],
-                "sameAs": same_as,
-            },
-            {
                 "@type": "WebSite",
                 "@id": f"{resolved_settings.site_url}/#website",
                 "name": profile.name,
                 "url": resolved_settings.site_url,
                 "description": profile.short_tagline,
                 "publisher": {"@id": f"{resolved_settings.site_url}/#person"},
+            },
+            {
+                "@type": "ProfilePage",
+                "@id": f"{resolved_settings.site_url}/#profile",
+                "name": f"{profile.name} profile",
+                "url": resolved_settings.site_url,
+                "description": profile.short_tagline,
+                "mainEntity": {"@id": f"{resolved_settings.site_url}/#person"},
             },
         ],
     }

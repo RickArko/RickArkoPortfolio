@@ -9,15 +9,15 @@ pytestmark = pytest.mark.end_to_end
 HTML_PAGES = [
     (
         "/",
-        "Rick Arko | AI/ML Consultant, Founder, and Applied AI Builder",
+        "Rick Arko | Applied AI/ML Builder and Senior Data Scientist",
         "https://rickarko.com/",
-        "Ship AI products that create leverage",
+        "I build production ML systems and practical AI products that teams can actually use.",
     ),
     (
         "/experience/",
         "Experience | Rick Arko",
         "https://rickarko.com/experience/",
-        "Built for operators, founders, and teams shipping under pressure.",
+        "Built for operators, product teams, and real production constraints.",
     ),
     (
         "/projects/",
@@ -33,9 +33,9 @@ HTML_PAGES = [
     ),
     (
         "/contact/",
-        "Work With Rick Arko",
+        "Connect With Rick Arko",
         "https://rickarko.com/contact/",
-        "Need AI leadership, implementation help, or a sharper plan for what to build next?",
+        "Open to new opportunities, thoughtful collaborations, and selective consulting.",
     ),
 ]
 
