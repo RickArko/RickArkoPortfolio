@@ -49,7 +49,7 @@ check: lint format-check test-fast ## Run the fast local quality gate
 
 lint-shell: ## Lint shell scripts with shellcheck if installed
 	@if command -v shellcheck >/dev/null 2>&1; then \
-		shellcheck deployment/bin/*.sh deployment/*.sh ecr.sh; \
+		shellcheck -x deployment/bin/*.sh deployment/*.sh ecr.sh; \
 	else \
 		echo "shellcheck not installed; skipping shell lint"; \
 	fi
