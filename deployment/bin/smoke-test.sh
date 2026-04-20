@@ -71,13 +71,12 @@ BASE_URL="${1%/}"
 # the TITLE field by splitting from both ends.
 parse_html_row() {
     local row="$1"
-    local path rest title_and_rest title canonical snippet
+    local path rest without_snippet title canonical snippet
 
     path="${row%%|*}"
     rest="${row#*|}"
     snippet="${rest##*|}"
-    # strip trailing snippet + its delimiter
-    local without_snippet="${rest%|*}"
+    without_snippet="${rest%|*}"
     canonical="${without_snippet##*|}"
     title="${without_snippet%|*}"
 
