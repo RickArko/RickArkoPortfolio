@@ -109,6 +109,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    outputs:
+      previous_digest: ${{ steps.capture-previous.outputs.digest }}
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -134,6 +136,24 @@ jobs:
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Capture previous :latest digest for rollback
+        id: capture-previous
+        run: |
+          digest="$(
+            aws ecr describe-images \
+              --repository-name "$ECR_REPOSITORY" \
+              --image-ids imageTag=latest \
+              --query 'imageDetails[0].imageDigest' \
+              --output text 2>/dev/null || echo ""
+          )"
+          if [[ -z "$digest" || "$digest" == "None" ]]; then
+            echo "No previous :latest found (first deploy?); rollback for this run disabled."
+            digest=""
+          else
+            echo "Captured previous :latest digest for rollback: $digest"
+          fi
+          echo "digest=${digest}" >> "$GITHUB_OUTPUT"
+
       - name: Tag and push to ECR
         env:
           ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
@@ -150,6 +170,7 @@ jobs:
             echo "- Pushed image tags for repository \`${ECR_REPOSITORY}\`"
             echo "- Immutable tag: \`${{ github.sha }}\`"
             echo "- Mutable tag: \`latest\`"
+            echo "- Previous :latest digest (rollback target): \`${{ steps.capture-previous.outputs.digest || 'none' }}\`"
           } >> "$GITHUB_STEP_SUMMARY"
 
   deploy:
@@ -159,6 +180,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - uses: actions/checkout@v4
+
       - name: Validate deployment configuration
         run: |
           test -n "$AWS_ROLE_TO_ASSUME" || { echo "Missing repository variable AWS_ROLE_TO_ASSUME" >&2; exit 1; }
@@ -243,6 +266,28 @@ jobs:
           done
 
           echo "Deployment health check did not pass in time: $DEPLOY_HEALTHCHECK_URL" >&2
+          exit 1
+
+      - name: Post-deploy HTTP contract smoke test
+        id: smoke-test
+        env:
+          BASE_URL: ${{ vars.DEPLOY_BASE_URL || 'https://rickarko.com' }}
+        run: |
+          ./deployment/bin/smoke-test.sh "$BASE_URL"
+
+      - name: Auto-rollback on smoke-test failure
+        if: failure() && steps.smoke-test.conclusion == 'failure' && needs.push-ecr.outputs.previous_digest != ''
+        env:
+          TARGET_DIGEST: ${{ needs.push-ecr.outputs.previous_digest }}
+        run: |
+          echo "::error::Smoke test failed. Auto-rolling back to $TARGET_DIGEST"
+          ./deployment/bin/rollback.sh \
+            --to "$TARGET_DIGEST" \
+            --service-arn "$APPRUNNER_SERVICE_ARN" \
+            --region "$AWS_REGION" \
+            --repo "$ECR_REPOSITORY"
+          # Rollback succeeded — still fail the workflow so the bad merge is surfaced.
+          echo "::error::Rolled back to previous digest. Marking workflow failed so the regression is visible."
           exit 1
 
       - name: Summarize deployment

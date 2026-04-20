@@ -204,7 +204,38 @@ Each step is independently shippable via its own PR, which itself exercises the 
 
 ---
 
-## 8. Acceptance criteria
+## 8. Implementation status
+
+| # | Artifact | Status |
+|---|----------|--------|
+| 1 | `deployment/bin/smoke-test.sh` | ✅ implemented, verified green against `https://rickarko.com` |
+| 2 | `deployment/bin/rollback.sh` | ✅ implemented; promotes any ECR digest back to `:latest` and redeploys |
+| 3 | `deployment/bin/preview-create.sh` | ✅ implemented; idempotent create; emits preview URL to stdout |
+| 4 | `deployment/bin/preview-destroy.sh` | ✅ implemented; tolerant of already-deleted state |
+| 5 | `.github/workflows/deploy.yml` | ✅ extended with digest capture, smoke test, auto-rollback |
+| 6 | `.github/workflows/pr-preview.yml` | ✅ new workflow — build `:pr-<N>`, spin preview, comment URL, teardown on close |
+| 7 | `Makefile` | ✅ `ship`, `smoke-test`, `rollback`, `preview-create`, `preview-destroy` added |
+| 8 | `tests/regression/test_smoke_contract.py` | ✅ parity test — bash smoke contract vs python e2e |
+| 9 | `factory.py` / `seo.py` robots gate | ✅ `ROBOTS_NOINDEX=1` forces `noindex,nofollow`, strips JSON-LD, disallows crawlers in `/robots.txt` |
+
+### New GitHub repository variables required
+
+- `APPRUNNER_ACCESS_ROLE_ARN` — IAM role App Runner itself uses to pull images from ECR (distinct from `AWS_ROLE_TO_ASSUME`, which is the OIDC role GitHub Actions assumes).
+- `DEPLOY_BASE_URL` *(optional)* — overrides `https://rickarko.com` for the post-deploy smoke step.
+
+### IAM policy deltas still to apply manually
+
+Update `deployment/aws/github-actions-deploy-policy.json` to grant the CI role:
+
+- `ecr:BatchGetImage`, `ecr:PutImage`, `ecr:DescribeImages` on the ECR repo (for `rollback.sh`).
+- `apprunner:CreateService`, `apprunner:DeleteService`, `apprunner:DescribeService`, `apprunner:ListServices`, `apprunner:TagResource` on `arn:...:service/portfolio-pr-*/*`.
+- `iam:PassRole` on `APPRUNNER_ACCESS_ROLE_ARN` (required so GitHub Actions can hand that role to App Runner during `create-service`).
+
+Update the OIDC trust policy `sub` condition to allow `repo:RickArko/RickArkoPortfolio:pull_request` alongside the existing `refs/heads/main` rule.
+
+---
+
+## 9. Acceptance criteria
 
 - `make ship` from any feature branch opens a PR, triggers a preview, and posts its URL within ~5 min.
 - Merging to `main` deploys, smoke-tests, and — on smoke failure — restores the previous digest automatically; the workflow surfaces a red X and a linked rollback log.
@@ -214,7 +245,7 @@ Each step is independently shippable via its own PR, which itself exercises the 
 
 ---
 
-## 9. Runbook: prod regression
+## 10. Runbook: prod regression
 
 1. CI is red after a merge → check the workflow's `smoke-test` step output.
 2. If `rollback.sh` already ran, prod is on the previous digest. Verify with `make smoke-test`.

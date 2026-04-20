@@ -100,14 +100,17 @@ def create_app(
 
     @app.route("/robots.txt")
     def robots() -> Response:
-        body = "\n".join(
-            [
-                "User-agent: *",
-                "Allow: /",
-                f"Sitemap: {resolved_settings.site_url}/sitemap.xml",
-                "",
-            ]
-        )
+        if resolved_settings.robots_noindex:
+            body = "\n".join(["User-agent: *", "Disallow: /", ""])
+        else:
+            body = "\n".join(
+                [
+                    "User-agent: *",
+                    "Allow: /",
+                    f"Sitemap: {resolved_settings.site_url}/sitemap.xml",
+                    "",
+                ]
+            )
         return Response(body, mimetype="text/plain")
 
     @app.route("/sitemap.xml")

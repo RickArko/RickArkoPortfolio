@@ -184,12 +184,16 @@ def build_page(page_key: str, settings: Settings | None = None) -> dict[str, Any
         "meta_description": definition.description,
         "meta_keywords": ", ".join(definition.keywords),
         "canonical_url": build_url(definition.path, resolved_settings),
-        "robots": definition.robots,
+        "robots": (
+            "noindex,nofollow"
+            if resolved_settings.robots_noindex
+            else definition.robots
+        ),
         "og_type": definition.og_type,
         "og_image": resolved_settings.site_image_url,
     }
 
-    if page_key == "home":
+    if page_key == "home" and not resolved_settings.robots_noindex:
         page["schema_graph"] = build_home_schema(resolved_settings)
 
     return page
