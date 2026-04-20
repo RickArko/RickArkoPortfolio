@@ -120,13 +120,12 @@
     ],
     "insights": {
         "title": "Topics I like writing and speaking about",
-        "description": "I am especially interested in the practical edge where ambitious AI ideas meet messy systems, real users, and actual business constraints.",
+        "description": "I am especially interested in AI/ML experimentation and responsible implementations that can scale with real-world constraints.",
         "topics": [
-            "How to decide whether a use case needs an LLM, classic ML, or better product design",
-            "What makes RAG systems feel trustworthy instead of fragile",
-            "Evaluation patterns for AI features that touch real customer workflows",
-            "Why forecasting and operational ML still matter in the age of generative AI",
-            "How teams can avoid expensive AI platform detours early on"
+            "How to decide whether a use case needs a solution or better product design.",
+            "How to responsibly convey uncertainty around complex models that have to work in production.",
+            "Why forecasting and operational ML still matter in the age of generative AI.",
+            "How teams can avoid expensive AI/ML/Data platform detours early on."
         ]
     }
 }

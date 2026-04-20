@@ -14,11 +14,11 @@
         "1": {
             "employer_name": "ShipBob",
             "employment_duration": "February 2022 - Present",
-            "job_title": "Lead Data Scientist",
+            "job_title": "Data Scientist | ML Platform Owner",
             "headline": "Scaled forecasting and operational intelligence across a fast-changing fulfillment network.",
             "highlights": [
-                "Replaced hundreds of custom forecast models with a more scalable machine learning approach that brought site-level error down from 30%+ to under 15%.",
-                "Built predictions that support labor planning, automated inventory placement, zone skipping, and other business-critical workflows.",
+                "ML/Databricks Platform owner and SME: Data Science, Statistical Inference, Forecasting, MLOps, Inventory Optimization, API Development, and more.",
+                "Built end and administered end-to-end prediction platforms for ETA prediction (100m + orders/year), Demand Forecasting (1m+ timeseries / weekly).",
                 "Added anomaly detection, promotion adjustments, stock-out corrections, and other practical layers needed for reliable real-world performance.",
                 "Partnered across technical and business stakeholders while mentoring scientists and engineers into stronger builders."
             ]
