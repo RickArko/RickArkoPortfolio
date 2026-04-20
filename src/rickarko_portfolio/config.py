@@ -34,6 +34,7 @@ class Settings:
     template_dir: Path
     static_dir: Path
     static_image_path: str = DEFAULT_STATIC_IMAGE_PATH
+    robots_noindex: bool = False
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "site_url", self.site_url.rstrip("/"))
@@ -71,6 +72,7 @@ def build_settings(
     template_dir: Path | None = None,
     static_dir: Path | None = None,
     static_image_path: str = DEFAULT_STATIC_IMAGE_PATH,
+    robots_noindex: bool = False,
 ) -> Settings:
     """Build an immutable settings object."""
 
@@ -82,7 +84,15 @@ def build_settings(
         template_dir=template_dir or DEFAULT_TEMPLATE_DIR,
         static_dir=static_dir or DEFAULT_STATIC_DIR,
         static_image_path=static_image_path,
+        robots_noindex=robots_noindex,
     )
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
 @lru_cache(maxsize=1)
@@ -96,6 +106,7 @@ def get_settings() -> Settings:
         data_dir=Path(os.getenv("APP_DATA_DIR", DEFAULT_DATA_DIR)),
         template_dir=Path(os.getenv("APP_TEMPLATE_DIR", DEFAULT_TEMPLATE_DIR)),
         static_dir=Path(os.getenv("APP_STATIC_DIR", DEFAULT_STATIC_DIR)),
+        robots_noindex=_env_bool("ROBOTS_NOINDEX"),
     )
 
 

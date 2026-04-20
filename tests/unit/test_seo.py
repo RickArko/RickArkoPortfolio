@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import pytest
 
+from rickarko_portfolio.config import build_settings
 from rickarko_portfolio.seo import (
     build_home_schema,
     build_page,
@@ -49,6 +50,21 @@ def test_home_schema_uses_profile_links(settings):
     assert person["@type"] == "Person"
     assert "https://www.linkedin.com/in/rickarko" in person["sameAs"]
     assert "https://github.com/RickArko" in person["sameAs"]
+
+
+def test_robots_noindex_forces_noindex_on_every_page_and_strips_schema():
+    """With robots_noindex=True every page must be noindex and home must drop JSON-LD."""
+
+    noindex_settings = build_settings(robots_noindex=True)
+
+    for key in ("home", "experience", "projects", "blog", "contact"):
+        page = build_page(key, noindex_settings)
+        assert page["robots"] == "noindex,nofollow", f"{key} page not marked noindex"
+
+    home = build_page("home", noindex_settings)
+    assert "schema_graph" not in home, (
+        "schema_graph must not leak on preview/noindex hosts"
+    )
 
 
 def test_sitemap_pages_cover_core_routes(settings):

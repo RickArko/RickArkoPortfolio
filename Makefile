@@ -7,7 +7,9 @@ DOMAIN ?= rickarko.com
 IMAGE_NAME ?= $(APP_NAME)
 PORT ?= 8080
 
-.PHONY: help install dev test test-fast test-unit test-integration test-e2e test-regression format format-check lint check lint-shell verify doctor-aws deploy-check docker-build docker-run ecr-setup domain-setup domain-status domain-debug
+BASE_URL ?= https://$(DOMAIN)
+
+.PHONY: help install dev test test-fast test-unit test-integration test-e2e test-regression format format-check lint check lint-shell verify doctor-aws deploy-check docker-build docker-run ecr-setup domain-setup domain-status domain-debug ship smoke-test rollback preview-create preview-destroy
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-16s %s\n", $$1, $$2}'
@@ -79,3 +81,24 @@ domain-status: ## Show current App Runner and DNS status for the custom domain
 
 domain-debug: ## Watch detailed custom-domain status output
 	DOMAIN="$(DOMAIN)" SERVICE_NAME="$(SERVICE_NAME)" AWS_REGION="$(AWS_REGION)" ./deployment/bin/apprunner-debug.sh --watch
+
+ship: deploy-check ## Push current branch and open a PR into main
+	@git push -u origin HEAD
+	@gh pr create --fill --base main
+
+smoke-test: ## Run the post-deploy HTTP contract smoke test (override BASE_URL=...)
+	./deployment/bin/smoke-test.sh "$(BASE_URL)"
+
+rollback: ## Restore a previous image to prod: make rollback DIGEST=sha256:...
+	@test -n "$(DIGEST)" || { echo "Usage: make rollback DIGEST=sha256:..." >&2; exit 2; }
+	APPRUNNER_SERVICE_ARN="$(APPRUNNER_SERVICE_ARN)" AWS_REGION="$(AWS_REGION)" ECR_REPOSITORY="$(APP_NAME)" BASE_URL="$(BASE_URL)" \
+		./deployment/bin/rollback.sh --to "$(DIGEST)"
+
+preview-create: ## Create a preview service for the current PR: make preview-create TAG=pr-123
+	@pr="$$(gh pr view --json number -q .number)"; tag="$${TAG:-pr-$${pr}}"; \
+		APPRUNNER_ACCESS_ROLE_ARN="$(APPRUNNER_ACCESS_ROLE_ARN)" AWS_REGION="$(AWS_REGION)" ECR_REPOSITORY="$(APP_NAME)" \
+		./deployment/bin/preview-create.sh "$$pr" "$$tag"
+
+preview-destroy: ## Tear down the preview service for the current PR
+	@pr="$$(gh pr view --json number -q .number)"; \
+		AWS_REGION="$(AWS_REGION)" ./deployment/bin/preview-destroy.sh "$$pr"
