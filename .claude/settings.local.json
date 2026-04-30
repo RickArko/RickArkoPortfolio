@@ -15,7 +15,26 @@
       "Bash(make lint-shell *)",
       "Bash(gh pr *)",
       "Bash(curl -s -i https://rickarko.com/health)",
-      "Bash(curl -s \"https://rickarko.com/?cachebust=$\\(date +%s\\)\")"
+      "Bash(curl -s \"https://rickarko.com/?cachebust=$\\(date +%s\\)\")",
+      "Bash(dig +short exactera.rickarko.com)",
+      "Bash(uv run *)",
+      "Bash(AWS_PROFILE=career uv run rickos career site publish db/jobs/Exactera/Lead-Data-Platform-Engineer/posting.md)",
+      "Bash(unset VIRTUAL_ENV)",
+      "Bash(AWS_PROFILE=career RICKOS_SITE_BUCKET=rickarko-career-sites uv run rickos career site publish db/jobs/Exactera/Lead-Data-Platform-Engineer/posting.md --bucket rickarko-career-sites)",
+      "Bash(curl -s \"https://exactera.rickarko.com/?cb=$\\(date +%s\\)\")",
+      "Bash(curl -sI \"https://exactera.rickarko.com/resume.pdf\")",
+      "Bash(curl -s \"https://exactera.rickarko.com/?cb=$\\(date +%s\\)\" echo \"--- Banner metric ---\" grep -A1 'num\">[0-9]' /tmp/exactera.html)",
+      "Read(//tmp/**)",
+      "Bash(curl -sI \"https://exactera.rickarko.com/?cb=$\\(date +%s\\)\")",
+      "Bash(AWS_PROFILE=career aws s3api head-object --bucket rickarko-career-sites --key exactera/index.html)",
+      "Bash(AWS_PROFILE=career aws cloudfront list-distributions --query \"DistributionList.Items[?contains\\(Aliases.Items, 'exactera.rickarko.com'\\) || contains\\(Aliases.Items, 'rickarko.com'\\)].{Id:Id,Aliases:Aliases.Items,Status:Status}\" --output json)",
+      "Bash(curl -s \"https://exactera.rickarko.com/?cb=$\\(date +%s%N\\)\" echo \"--- md5 compare ---\" md5sum /tmp/live_now.html /home/ricka/Git/RickArkoOS/db/jobs/Exactera/Lead-Data-Platform-Engineer/site/index.html echo \"\" echo \"--- cosmetics count live ---\" grep -c \"cosmetics retailer\" /tmp/live_now.html echo \"\" echo \"--- security count live ---\" grep -c \"Security program owner\" /tmp/live_now.html echo \"\" echo \"--- All GBDT lines in live ---\" grep -oE \"[^>]*GBDT[^<]*\" /tmp/live_now.html)",
+      "Bash(curl -s \"https://exactera.rickarko.com/?cb=$\\(date +%s%N\\)\" echo \"--- Banner ---\" grep -oE 'num\">[^<]+</div><div class=\"label\">[^<]+' /tmp/live.html echo \"\" echo \"--- Role / title appearances ---\" grep -oE \"[^>]*Platform Owner[^<]*\" /tmp/live.html)",
+      "Bash(curl -s \"https://exactera.rickarko.com/?cb=$\\(date +%s%N\\)\" md5sum /tmp/live.html /home/ricka/Git/RickArkoOS/db/jobs/Exactera/Lead-Data-Platform-Engineer/site/index.html echo \"---\" curl -sI \"https://exactera.rickarko.com/resume.pdf\")",
+      "Bash(make help *)",
+      "Bash(make deploy *)",
+      "Bash(AWS_PROFILE=career aws s3api get-object-acl --bucket rickarko-career-sites --key exactera/resume.pdf)",
+      "Bash(curl -sI \"https://exactera.rickarko.com/\")"
     ]
   }
 }
