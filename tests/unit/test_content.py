@@ -39,7 +39,7 @@ def test_load_site_profile_returns_typed_profile(settings):
     profile = load_site_profile(settings)
 
     assert profile.name == "Rick Arko"
-    assert profile.email == "rick.arko17@gmail.com"
+    assert profile.email == "rickarko@pm.me"
     assert profile.github_url.endswith("/RickArko")
 
 

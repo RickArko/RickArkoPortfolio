@@ -95,6 +95,42 @@
             ]
         },
         "6": {
+            "title": "FFPy — Fantasy Football Optimization Engine",
+            "category": "Public build",
+            "engagement_type": "Open source toolkit",
+            "description": "A Streamlit app and Python toolkit that ingests nflverse and ESPN data into a local SQLite store, generates weekly projections, and optimizes lineups via linear programming.",
+            "impact": "An end-to-end build — data ingestion, projection modeling, constrained optimization, and a usable interface — in a domain where decision quality is measurable every week.",
+            "image": "/static/images/project-logos/FFPy.png",
+            "logo_text": "FF",
+            "accent": "#b45309",
+            "github_url": "https://github.com/RickArko/FFPy",
+            "demo_url": "",
+            "technologies": [
+                "Python",
+                "Streamlit",
+                "PuLP",
+                "nflverse"
+            ]
+        },
+        "7": {
+            "title": "BASB — Building a Second Brain",
+            "category": "Public build",
+            "engagement_type": "Personal knowledge OS",
+            "description": "A Tiago Forte–inspired personal knowledge and tooling system: a one-shot installer that bootstraps a fresh machine for daily ML/AI work, plus a small CLI (arkolab) for GitHub profile and workflow automation.",
+            "impact": "Captures notes, tools, and workflows in one place so context follows me across machines instead of living in scattered files.",
+            "image": "/static/images/project-logos/BASB.png",
+            "logo_text": "BR",
+            "accent": "#1e3a8a",
+            "github_url": "https://github.com/RickArko/BASB",
+            "demo_url": "",
+            "technologies": [
+                "Python",
+                "Bash",
+                "uv",
+                "Automation"
+            ]
+        },
+        "8": {
             "title": "Portfolio Platform",
             "category": "Public build",
             "engagement_type": "Personal platform",
