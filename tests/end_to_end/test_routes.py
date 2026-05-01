@@ -11,7 +11,7 @@ HTML_PAGES = [
         "/",
         "Rick Arko | Applied AI/ML Builder and Senior Data Scientist",
         "https://rickarko.com/",
-        "I build production ML systems and practical AI products that teams can actually use.",
+        "I build AI/ML Solutions that businesses can use to scale responsibly.",
     ),
     (
         "/experience/",

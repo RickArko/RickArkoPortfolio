@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh auth:*)",
+      "Bash(aws route53:*)",
+      "Bash(nslookup -type=NS rickarko.com)",
+      "Bash(dig NS rickarko.com +short)",
+      "Bash(aws apprunner:*)",
+      "Bash(nslookup ctydyem9cj.us-east-1.awsapprunner.com)",
+      "WebSearch",
+      "Bash(gh run *)",
+      "Bash(command -v shellcheck)",
+      "Bash(make lint-shell *)",
+      "Bash(gh pr *)",
+      "Bash(curl -s -i https://rickarko.com/health)",
+      "Bash(curl -s \"https://rickarko.com/?cachebust=$\\(date +%s\\)\")"
+    ]
+  }
+}
