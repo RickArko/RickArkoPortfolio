@@ -17,9 +17,8 @@
             "job_title": "Data Scientist",
             "headline": "Scaled forecasting and operational intelligence across a fast-changing fulfillment network.",
             "highlights": [
-                "ML (Databricks/AzureML Foundry) Platform Owner for: Forecasting (ML/DL/Stats), ETA Prediction (Quantile Regression/Conformal Calibration, API Development), Unsupervised Classification, Outlier Detection, NLP/Sentiment Analysis and more.",
-                "ML/Databricks Platform owner and SME: Data Science, Statistical Inference, Forecasting, MLOps, Inventory Optimization, API Development, and more.",
-                "Built end and administered end-to-end prediction platforms for ETA prediction (100m + orders/year), Demand Forecasting (1m+ timeseries / weekly).",
+                "ML Platform Owner (Databricks / Azure ML Foundry) for: Forecasting (ML/DL/Stats), ETA Prediction (Quantile Regression / Conformal Calibration, API development), Unsupervised Classification, Outlier Detection, NLP / Sentiment Analysis, and more.",
+                "Built and administered end-to-end prediction platforms for ETA prediction (100M+ orders/year) and demand forecasting (1M+ timeseries, weekly).",
                 "Added anomaly detection, promotion adjustments, stock-out corrections, and other practical layers needed for reliable real-world performance.",
                 "Partnered across technical and business stakeholders while mentoring scientists and engineers into stronger builders."
             ]
@@ -31,7 +30,7 @@
             "headline": "Owned real-time pricing systems where quality and uptime had direct financial consequences.",
             "highlights": [
                 "Maintained and improved machine learning and statistical models powering live pricing and several adjacent business-critical services.",
-                "Led development for automated tender acceptance and Baseline market-cost prediction service that matched the best ensemble error on basic Orders while using only five common shipment inputs.",
+                "Led development of automated tender acceptance and a baseline market-cost prediction service that matched best-in-class ensemble accuracy on standard orders using only five common shipment inputs.",
                 "Built scalable REST services on AKS with high-throughput batch endpoints and explainability features for human review.",
                 "Interviewed, hired, and mentored new team members as the group expanded from a small core team into a larger function."
             ]
