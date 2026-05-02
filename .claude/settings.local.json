@@ -38,7 +38,8 @@
       "Bash(aws s3 *)",
       "Bash(curl -sI \"https://exactera.rickarko.com/resume.pdf?cb=$\\(date +%s%N\\)\")",
       "Bash(aws sts *)",
-      "Bash(aws iam *)"
+      "Bash(aws iam *)",
+      "Bash(gh variable *)"
     ]
   }
 }
