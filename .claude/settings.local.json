@@ -36,7 +36,9 @@
       "Bash(AWS_PROFILE=career aws s3api get-object-acl --bucket rickarko-career-sites --key exactera/resume.pdf)",
       "Bash(curl -sI \"https://exactera.rickarko.com/\")",
       "Bash(aws s3 *)",
-      "Bash(curl -sI \"https://exactera.rickarko.com/resume.pdf?cb=$\\(date +%s%N\\)\")"
+      "Bash(curl -sI \"https://exactera.rickarko.com/resume.pdf?cb=$\\(date +%s%N\\)\")",
+      "Bash(aws sts *)",
+      "Bash(aws iam *)"
     ]
   }
 }
