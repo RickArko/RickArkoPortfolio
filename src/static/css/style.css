@@ -692,6 +692,130 @@ ul {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.auth-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
+    gap: 1.2rem;
+    align-items: stretch;
+    padding-top: 3rem;
+}
+
+.auth-panel,
+.auth-card {
+    padding: 1.5rem;
+}
+
+.auth-panel h1,
+.auth-card h2 {
+    margin-bottom: 0.85rem;
+}
+
+.auth-panel p {
+    margin-top: 0;
+}
+
+.auth-points {
+    display: grid;
+    gap: 0.95rem;
+    margin-top: 1.4rem;
+}
+
+.auth-point {
+    padding-top: 0.3rem;
+    border-top: 1px solid var(--line);
+}
+
+.auth-point:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.auth-point h2 {
+    margin-bottom: 0.45rem;
+    font-size: 1.35rem;
+}
+
+.auth-card form {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.2rem;
+}
+
+.auth-field {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.auth-field label,
+.auth-checkbox {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.auth-field input {
+    min-height: 3.25rem;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(17, 38, 58, 0.14);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--text);
+    font: inherit;
+}
+
+.auth-field input:focus {
+    outline: 2px solid rgba(15, 118, 110, 0.28);
+    outline-offset: 2px;
+    border-color: rgba(15, 118, 110, 0.4);
+}
+
+.auth-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+}
+
+.auth-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.96rem;
+}
+
+.auth-checkbox input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--accent);
+}
+
+.auth-inline a {
+    font-weight: 600;
+    color: var(--accent-dark);
+}
+
+.auth-note {
+    margin: 0;
+    color: var(--text-soft);
+}
+
+.auth-status {
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
+    font-weight: 500;
+}
+
+.auth-status--success {
+    background: rgba(15, 118, 110, 0.12);
+    color: var(--accent-dark);
+}
+
+.auth-status--error {
+    background: rgba(185, 28, 28, 0.1);
+    color: #991b1b;
+}
+
 .insight-card p,
 .contact-card p {
     margin-top: 0;
@@ -776,6 +900,7 @@ ul {
     .hero,
     .story-grid,
     .contact-hero,
+    .auth-shell,
     .site-footer__inner {
         grid-template-columns: 1fr;
     }

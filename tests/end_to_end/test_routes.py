@@ -37,6 +37,12 @@ HTML_PAGES = [
         "https://rickarko.com/contact/",
         "Open to new opportunities, thoughtful collaborations, and selective consulting.",
     ),
+    (
+        "/sign-in/",
+        "Sign In | Rick Arko",
+        "https://rickarko.com/sign-in/",
+        "Use this lightweight entry point for private updates, member access, or any",
+    ),
 ]
 
 
@@ -70,6 +76,7 @@ def test_home_page_exposes_navigation_seo_and_static_assets(client):
     assert 'href="/projects/"' in body
     assert 'href="/blog/"' in body
     assert 'href="/contact/"' in body
+    assert 'href="/sign-in/"' in body
     assert 'name="description"' in body
     assert 'property="og:title"' in body
     assert "application/ld+json" in body
@@ -86,6 +93,45 @@ def test_projects_page_renders_case_study_content(client):
     assert "Network Forecasting Platform" in body
     assert "Crypto Market Intelligence App" in body
     assert "Private case study" in body
+
+
+def test_sign_in_page_renders_form_contract(client):
+    """The sign-in page should expose the expected minimal form fields."""
+
+    response = client.get("/sign-in/")
+    body = response.data.decode()
+
+    assert response.status_code == 200
+    assert 'method="post"' in body
+    assert 'type="email"' in body
+    assert 'type="password"' in body
+    assert "Remember me" in body
+    assert 'name="robots" content="noindex,follow"' in body
+
+
+def test_sign_in_page_handles_minimal_submission_feedback(client):
+    """The sign-in page should validate missing fields and acknowledge complete posts."""
+
+    missing_response = client.post("/sign-in/", data={"email": "", "password": ""})
+    missing_body = missing_response.data.decode()
+
+    assert missing_response.status_code == 200
+    assert "Enter both an email and password to continue." in missing_body
+
+    success_response = client.post(
+        "/sign-in/",
+        data={
+            "email": "user@example.com",
+            "password": "super-secret",
+            "remember": "on",
+        },
+    )
+    success_body = success_response.data.decode()
+
+    assert success_response.status_code == 200
+    assert "Minimal sign-in captured." in success_body
+    assert 'value="user@example.com"' in success_body
+    assert "checked" in success_body
 
 
 def test_404_page_renders_branded_fallback_without_traceback(client):

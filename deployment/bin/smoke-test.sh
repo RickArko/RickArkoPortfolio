@@ -30,6 +30,7 @@ readonly HTML_PAGES=(
     "/projects/|Selected Work | Rick Arko|https://rickarko.com/projects/|A mix of private case studies, public experiments, and product-minded builds."
     "/blog/|Insights | Rick Arko|https://rickarko.com/blog/|Topics I like writing and speaking about"
     "/contact/|Connect With Rick Arko|https://rickarko.com/contact/|Open to new opportunities, thoughtful collaborations, and selective consulting."
+    "/sign-in/|Sign In | Rick Arko|https://rickarko.com/sign-in/|Use this lightweight entry point for private updates, member access, or any"
 )
 
 readonly SITEMAP_URLS=(

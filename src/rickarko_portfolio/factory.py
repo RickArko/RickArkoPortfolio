@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import date
 from typing import Any, Mapping
 
-from flask import Flask, Response, render_template
+from flask import Flask, Response, render_template, request
 
 from .config import Settings, get_settings
 from .content import (
@@ -97,6 +97,38 @@ def create_app(
             "contact",
             context=load_home_content(resolved_settings),
         )
+
+    @app.route("/sign-in/", methods=["GET", "POST"])
+    def sign_in() -> tuple[str, int]:
+        context: dict[str, Any] = {
+            "email": "",
+            "remember": False,
+            "status": None,
+            "message": None,
+        }
+
+        if request.method == "POST":
+            email = request.form.get("email", "").strip()
+            password = request.form.get("password", "")
+            remember = request.form.get("remember") == "on"
+
+            context.update(email=email, remember=remember)
+
+            if not email or not password:
+                context.update(
+                    status="error",
+                    message="Enter both an email and password to continue.",
+                )
+            else:
+                context.update(
+                    status="success",
+                    message=(
+                        "Minimal sign-in captured. Connect this form to a real "
+                        "auth provider when you're ready."
+                    ),
+                )
+
+        return render_page("sign-in.html", "sign_in", context=context)
 
     @app.route("/robots.txt")
     def robots() -> Response:

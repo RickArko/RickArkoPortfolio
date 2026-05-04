@@ -107,6 +107,23 @@ PAGE_DEFINITIONS = {
             "LLM implementation",
         ),
     ),
+    "sign_in": PageDefinition(
+        slug="sign-in",
+        label="Sign In",
+        path="/sign-in/",
+        title="Sign In | Rick Arko",
+        description=(
+            "A minimal sign-in screen for private updates, lightweight access, "
+            "or future authentication flows."
+        ),
+        keywords=(
+            "sign in",
+            "login",
+            "account access",
+            "authentication",
+        ),
+        robots="noindex,follow",
+    ),
     "404": PageDefinition(
         slug="not-found",
         label="Not Found",

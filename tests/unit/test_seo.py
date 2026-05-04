@@ -41,6 +41,16 @@ def test_non_home_pages_do_not_embed_schema_graph(settings):
     assert "schema_graph" not in page
 
 
+def test_sign_in_page_defaults_to_noindex(settings):
+    """The sign-in page should be reachable but excluded from search indexing."""
+
+    page = build_page("sign_in", settings)
+
+    assert page["canonical_url"] == "https://rickarko.com/sign-in/"
+    assert page["robots"] == "noindex,follow"
+    assert "schema_graph" not in page
+
+
 def test_home_schema_uses_profile_links(settings):
     """The schema graph should include the social links from profile content."""
 
@@ -57,7 +67,7 @@ def test_robots_noindex_forces_noindex_on_every_page_and_strips_schema():
 
     noindex_settings = build_settings(robots_noindex=True)
 
-    for key in ("home", "experience", "projects", "blog", "contact"):
+    for key in ("home", "experience", "projects", "blog", "contact", "sign_in"):
         page = build_page(key, noindex_settings)
         assert page["robots"] == "noindex,nofollow", f"{key} page not marked noindex"
 
