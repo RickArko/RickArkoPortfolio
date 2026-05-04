@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="auth-shell section">
+    <div class="auth-panel card card--glass" data-reveal>
+        <p class="section-eyebrow">Minimal sign in</p>
+        <h1>Welcome back.</h1>
+        <p>
+            Use this lightweight entry point for private updates, member access, or any
+            future authentication flow you want to wire into the site.
+        </p>
+
+        <div class="auth-points">
+            <article class="auth-point">
+                <h2>Only the essentials</h2>
+                <p>Email, password, one clear action, and no extra UI clutter.</p>
+            </article>
+            <article class="auth-point">
+                <h2>Ready for real auth</h2>
+                <p>The form posts server-side already, so it can be connected to a provider later without reworking the screen.</p>
+            </article>
+            <article class="auth-point">
+                <h2>Still easy to reach me</h2>
+                <p>If you were actually looking to connect, the contact page is still the fastest path.</p>
+            </article>
+        </div>
+    </div>
+
+    <div class="auth-card card" data-reveal>
+        <p class="section-eyebrow">Account access</p>
+        <h2>Sign in</h2>
+        <p class="auth-note">A compact, server-rendered form with just enough structure to plug into a full auth flow later.</p>
+
+        {% if context.message %}
+        <div
+            id="sign-in-message"
+            class="auth-status auth-status--{{ context.status }}"
+            role="{{ 'alert' if context.status == 'error' else 'status' }}"
+        >
+            {{ context.message }}
+        </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            <div class="auth-field">
+                <label for="email">Email</label>
+                <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    value="{{ context.email }}"
+                    {% if context.message %}aria-describedby="sign-in-message"{% endif %}
+                    required
+                >
+            </div>
+
+            <div class="auth-field">
+                <label for="password">Password</label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    {% if context.message %}aria-describedby="sign-in-message"{% endif %}
+                    required
+                >
+            </div>
+
+            <div class="auth-inline">
+                <label class="auth-checkbox" for="remember">
+                    <input
+                        id="remember"
+                        name="remember"
+                        type="checkbox"
+                        {% if context.remember %}checked{% endif %}
+                    >
+                    <span>Remember me</span>
+                </label>
+                <a href="{{ url_for('contact') }}">Need help?</a>
+            </div>
+
+            <button class="button button--primary" type="submit">Continue</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

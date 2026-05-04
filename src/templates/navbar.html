@@ -25,6 +25,7 @@
             <a class="{% if page.slug == 'experience' %}is-active{% endif %}" href="{{ url_for('experience') }}">Experience</a>
             <a class="{% if page.slug == 'projects' %}is-active{% endif %}" href="{{ url_for('projects') }}">Work</a>
             <a class="{% if page.slug == 'blog' %}is-active{% endif %}" href="{{ url_for('blog') }}">Insights</a>
+            <a class="{% if page.slug == 'sign-in' %}is-active{% endif %}" href="{{ url_for('sign_in') }}">Sign in</a>
             <a class="site-nav__cta {% if page.slug == 'contact' %}is-active{% endif %}" href="{{ url_for('contact') }}">Let's Talk</a>
         </nav>
     </div>

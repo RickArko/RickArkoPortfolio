@@ -32,6 +32,7 @@ def test_create_app_registers_expected_routes(app):
         "/projects/",
         "/blog/",
         "/contact/",
+        "/sign-in/",
         "/robots.txt",
         "/sitemap.xml",
         "/health",
@@ -44,6 +45,7 @@ def test_request_context_resolves_named_routes(request_context):
     assert url_for("experience") == "/experience/"
     assert url_for("projects") == "/projects/"
     assert url_for("contact") == "/contact/"
+    assert url_for("sign_in") == "/sign-in/"
 
 
 def test_environment_override_updates_rendered_canonical_url(
