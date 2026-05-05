@@ -147,6 +147,24 @@
                 "SEO",
                 "Jinja2"
             ]
+        },
+        "9": {
+            "title": "M5 Forecasting Accuracy",
+            "category": "Public build",
+            "engagement_type": "Forecasting benchmark",
+            "description": "A reproducible Nixtla-based solution to the Kaggle M5 forecasting competition: 28-day daily forecasts across 30,490 Walmart product–store series, with three model families (Theta, AutoETS, LightGBM) and rolling-origin cross-validation.",
+            "impact": "Approaches world-class accuracy with a deliberately small feature menu — built around reproducibility, deterministic runs, and clarity rather than leaderboard chasing.",
+            "image": "/static/images/project-logos/M5.png",
+            "logo_text": "M5",
+            "accent": "#0891b2",
+            "github_url": "https://github.com/RickArko/M5",
+            "demo_url": "",
+            "technologies": [
+                "Python",
+                "Nixtla",
+                "LightGBM",
+                "Polars"
+            ]
         }
     }
 }
