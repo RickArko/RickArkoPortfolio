@@ -5,15 +5,12 @@
     <div class="contact-hero__copy" data-reveal>
         <p class="section-eyebrow">Get in touch</p>
         <h1>Senior applied AI/ML — IC roles, hands-on technical leadership, and selective consulting.</h1>
-        <p>
-            I work best with product, engineering, and operations teams who want practical progress:
-            better decisions, better systems, and less AI theater.
-        </p>
-        <a class="button button--primary" href="mailto:{{ site.email }}">Email Rick</a>
+        <p>{{ context.contact.intro }}</p>
+        <a class="button button--primary" href="mailto:{{ site.email }}">{{ context.contact.primary_cta_label }}</a>
     </div>
 
     <div class="contact-hero__panel card" data-reveal>
-        <p class="section-eyebrow">Good fit conversations</p>
+        <p class="section-eyebrow">{{ context.contact.fit_eyebrow }}</p>
         <div class="contact-fit-list">
             {% for engagement in context.engagements %}
             <article>
@@ -27,26 +24,20 @@
 
 <section class="section section--compact">
     <div class="contact-grid">
+        {% for channel in context.contact.channels %}
         <article class="contact-card card" data-reveal>
-            <p class="section-eyebrow">Email</p>
+            <p class="section-eyebrow">{{ channel.eyebrow }}</p>
+            {% if channel.kind == 'email' %}
             <h2>{{ site.email }}</h2>
-            <p>Email is the fastest way to reach me about full-time roles, consulting, or collaboration ideas.</p>
-            <a href="mailto:{{ site.email }}">Open Email</a>
+            <p>{{ channel.description }}</p>
+            <a href="mailto:{{ site.email }}">{{ channel.link_label }}</a>
+            {% else %}
+            <h2>{{ channel.title }}</h2>
+            <p>{{ channel.description }}</p>
+            <a href="{{ site|attr(channel.url_field) }}" target="_blank" rel="noreferrer">{{ channel.link_label }}</a>
+            {% endif %}
         </article>
-
-        <article class="contact-card card" data-reveal>
-            <p class="section-eyebrow">LinkedIn</p>
-            <h2>Professional profile</h2>
-            <p>Useful if you want to connect first, share context, or continue the conversation in a more public channel.</p>
-            <a href="{{ site.linkedin_url }}" target="_blank" rel="noreferrer">Visit LinkedIn</a>
-        </article>
-
-        <article class="contact-card card" data-reveal>
-            <p class="section-eyebrow">GitHub</p>
-            <h2>Code and experiments</h2>
-            <p>Browse public repos, side projects, and the code behind this site.</p>
-            <a href="{{ site.github_url }}" target="_blank" rel="noreferrer">View GitHub</a>
-        </article>
+        {% endfor %}
     </div>
 </section>
 {% endblock %}

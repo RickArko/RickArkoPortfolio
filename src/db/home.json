@@ -118,6 +118,35 @@
             "description": "Available for focused advisory or build engagements when the problem is a strong fit and the work is meaningful."
         }
     ],
+    "contact": {
+        "intro": "I work best with product, engineering, and operations teams who want practical progress: better decisions, better systems, and less AI theater.",
+        "primary_cta_label": "Email Rick",
+        "fit_eyebrow": "Good fit conversations",
+        "channels": [
+            {
+                "kind": "email",
+                "eyebrow": "Email",
+                "description": "Email is the fastest way to reach me about IC roles, consulting, or collaboration ideas.",
+                "link_label": "Open Email"
+            },
+            {
+                "kind": "link",
+                "eyebrow": "LinkedIn",
+                "title": "Professional profile",
+                "description": "Useful if you want to connect first, share context, or continue the conversation in a more public channel.",
+                "link_label": "Visit LinkedIn",
+                "url_field": "linkedin_url"
+            },
+            {
+                "kind": "link",
+                "eyebrow": "GitHub",
+                "title": "Code and experiments",
+                "description": "Browse public repos, side projects, and the code behind this site.",
+                "link_label": "View GitHub",
+                "url_field": "github_url"
+            }
+        ]
+    },
     "insights": {
         "title": "Topics I like writing and speaking about",
         "description": "I am especially interested in AI/ML experimentation and responsible implementations that can scale with real-world constraints.",
