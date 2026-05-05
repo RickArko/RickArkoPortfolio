@@ -9,13 +9,20 @@ PORT ?= 8080
 
 BASE_URL ?= https://$(DOMAIN)
 
-.PHONY: help install dev test test-fast test-unit test-integration test-e2e test-regression format format-check lint check lint-shell verify doctor-aws deploy-check docker-build docker-run ecr-setup domain-setup domain-status domain-debug ship smoke-test rollback preview-create preview-destroy
+.PHONY: help install dev test test-fast test-unit test-integration test-e2e test-regression format format-check lint check lint-shell verify doctor-aws deploy-check docker-build docker-run ecr-setup domain-setup domain-status domain-debug ship smoke-test rollback preview-create preview-destroy pre-commit pre-commit-update
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-16s %s\n", $$1, $$2}'
 
-install: ## Install project dependencies with uv
+install: ## Install project dependencies and pre-commit git hooks
 	uv sync --dev
+	uv run pre-commit install --install-hooks
+
+pre-commit: ## Run pre-commit on all files (mirrors per-commit checks)
+	uv run pre-commit run --all-files
+
+pre-commit-update: ## Update pinned pre-commit hook versions
+	uv run pre-commit autoupdate
 
 dev: ## Run the Flask app locally on port 8080
 	uv run python -m rickarko_portfolio

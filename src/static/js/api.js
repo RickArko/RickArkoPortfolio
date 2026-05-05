@@ -15,7 +15,7 @@ $("#search-bar").on('click', function(){
     const displayData = async () => {
         const postsObject = await getPosts(postsURL)
         const posts = postsObject.posts
-        
+
         $("#search-bar").keyup(function(){
             let searchData = $(this).val().toLowerCase();
             const match = posts.filter(post => {
@@ -26,7 +26,7 @@ $("#search-bar").on('click', function(){
             //     <li><a href="${post.id}">${post.title}</a>
             //     <a class="float-right small text-secondary" href="${post.category__name}"> in ${post.category__name}</a></li>`
             // ).join('');
-            const html = match.map(post => 
+            const html = match.map(post =>
                 "<li>\
                     <a href="+getBaseUrl('posts')+""+post.id+">"+post.title+"</a>\
                     <a class='float-right small text-secondary' href="+getBaseUrl('category')+""+post.category__name+">in "+post.category__name+"</a>\
@@ -58,14 +58,14 @@ $('#email-button').on('click', function() {
     var urlencoded = new URLSearchParams();
     urlencoded.append('email', userEmail);
     urlencoded.append('csrfmiddlewaretoken', csrfToken);
-    
+
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: urlencoded,
         redirect: 'follow'
     };
-    
+
     fetch(subscribeURL, requestOptions)
       .then(response => response.text())
       .then(result => $('.modal-body').text(`${result}`))
