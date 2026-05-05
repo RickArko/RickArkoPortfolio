@@ -39,7 +39,17 @@
       "Bash(curl -sI \"https://exactera.rickarko.com/resume.pdf?cb=$\\(date +%s%N\\)\")",
       "Bash(aws sts *)",
       "Bash(aws iam *)",
-      "Bash(gh variable *)"
+      "Bash(gh variable *)",
+      "Bash(gh api *)",
+      "Bash(make deploy-check *)",
+      "Bash(curl -sf https://rickarko.com/health)",
+      "Bash(curl -sI https://rickarko.com/)",
+      "Bash(curl -s https://rickarko.com/projects/)",
+      "Bash(curl -sI \"https://exactera.rickarko.com/cover-letter.pdf\")",
+      "Bash(pdftotext /home/ricka/Git/RickArkoOS/db/jobs/Exactera/Lead-Data-Platform-Engineer/cover_letter.pdf -)",
+      "Bash(command -v pdftotext)",
+      "Bash(command -v pdfinfo)",
+      "Bash(python3 -c \"import sys; print\\(sys.version\\)\")"
     ]
   }
 }
