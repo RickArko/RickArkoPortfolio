@@ -106,16 +106,28 @@
     ],
     "engagements": [
         {
-            "title": "Senior Builder / IC",
-            "description": "A strong fit if you need someone who can own messy ML and AI problems end to end while collaborating well across product, engineering, and operations."
+            "title": "W2",
+            "description": "Full-time senior IC or hands-on technical lead roles in applied AI/ML — owning systems end-to-end across product, engineering, and operations."
         },
         {
-            "title": "Hands-on Technical Lead",
-            "description": "Useful for teams that want a pragmatic builder who can shape direction, mentor others, and still stay close to the code and systems."
+            "title": "Part-time",
+            "description": "Ongoing involvement without a full-time commitment — useful for teams that need senior technical judgment alongside their existing build velocity."
         },
         {
-            "title": "Selective Consulting",
-            "description": "Available for focused advisory or build engagements when the problem is a strong fit and the work is meaningful."
+            "title": "Consulting",
+            "description": "Focused, scoped engagements: a model stack to improve, an evaluation loop to design, or a system to move from prototype to production."
+        },
+        {
+            "title": "Advisory",
+            "description": "Periodic strategic input for founders and engineering leaders who want a second opinion on AI/ML direction without a delivery commitment."
+        },
+        {
+            "title": "Mentee / Mentorship",
+            "description": "Mentoring junior data scientists and ML engineers — and open to being mentored by people deeper in adjacent areas like distributed systems or research ML."
+        },
+        {
+            "title": "Collaboration / Projects",
+            "description": "Open-source builds, applied research, and side projects with peers when the problem is meaningful and the work fits alongside ongoing engagements."
         }
     ],
     "contact": {
