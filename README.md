@@ -103,9 +103,9 @@ Success means:
 - response body is `{"status":"ok"}`
 
 
-### Manual Alternatives _(if ever needed)_:     
+### Manual Alternatives _(if ever needed)_:
   - Re-trigger the same workflow: `gh run rerun 25203824177 --repo RickArko/RickArkoPortfolio`
-  - Trigger workflow_dispatch against any commit: `gh workflow run "Portfolio CI/CD" --ref main --repo RickArko/RickArkoPortfolio`                                    
+  - Trigger workflow_dispatch against any commit: `gh workflow run "Portfolio CI/CD" --ref main --repo RickArko/RickArkoPortfolio`
   - Direct App Runner deploy (skip CI): `aws apprunner start-deployment --service-arn "$APPRUNNER_SERVICE_ARN" --region us-east-1`
 
 

@@ -23,7 +23,7 @@
 .pagination {
     padding: 30px 0;
 }
-    
+
 .pagination ul {
     margin: 0;
     padding: 0;
@@ -80,7 +80,7 @@
 
 .anchor-default,
 .anchor-default:hover {
-    text-decoration: none; 
+    text-decoration: none;
     color: black;
 }
 
