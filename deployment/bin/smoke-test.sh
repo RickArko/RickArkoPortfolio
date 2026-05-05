@@ -25,11 +25,11 @@ readonly SLEEP_SECONDS="${SMOKE_SLEEP_SECONDS:-10}"
 # Field separator is '|' — none of the current fields contain a pipe.
 # -----------------------------------------------------------------------------
 readonly HTML_PAGES=(
-    "/|Rick Arko | Applied AI/ML Builder and Senior Data Scientist|https://rickarko.com/|I build AI/ML Solutions that businesses can use to scale responsibly."
+    "/|Rick Arko | Applied AI/ML Builder and Senior Data Scientist|https://rickarko.com/|I build AI/ML solutions that businesses can use to scale responsibly."
     "/experience/|Experience | Rick Arko|https://rickarko.com/experience/|Built for operators, product teams, and real production constraints."
     "/projects/|Selected Work | Rick Arko|https://rickarko.com/projects/|A mix of private case studies, public experiments, and product-minded builds."
     "/blog/|Insights | Rick Arko|https://rickarko.com/blog/|Topics I like writing and speaking about"
-    "/contact/|Connect With Rick Arko|https://rickarko.com/contact/|Open to new opportunities, thoughtful collaborations, and selective consulting."
+    "/contact/|Connect With Rick Arko|https://rickarko.com/contact/|IC roles, hands-on technical leadership, and selective consulting."
     "/sign-in/|Sign In | Rick Arko|https://rickarko.com/sign-in/|Use this lightweight entry point for private updates, member access, or any"
 )
 

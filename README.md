@@ -1,6 +1,6 @@
 # Rick Arko Portfolio Website
 
-Flask portfolio site for Rick Arko, positioned as an AI/ML consultant and founder profile.
+Flask portfolio site for Rick Arko, positioned as an applied AI/ML builder and senior IC.
 
 ## Linux-first workflow
 

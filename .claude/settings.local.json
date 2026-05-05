@@ -39,7 +39,8 @@
       "Bash(curl -sI \"https://exactera.rickarko.com/resume.pdf?cb=$\\(date +%s%N\\)\")",
       "Bash(aws sts *)",
       "Bash(aws iam *)",
-      "Bash(gh variable *)"
+      "Bash(gh variable *)",
+      "Bash(python3 -m json.tool /home/ricka/Git/RickArkoPortfolio/src/db/home.json)"
     ]
   }
 }

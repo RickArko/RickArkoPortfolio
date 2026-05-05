@@ -11,7 +11,7 @@ HTML_PAGES = [
         "/",
         "Rick Arko | Applied AI/ML Builder and Senior Data Scientist",
         "https://rickarko.com/",
-        "I build AI/ML Solutions that businesses can use to scale responsibly.",
+        "I build AI/ML solutions that businesses can use to scale responsibly.",
     ),
     (
         "/experience/",
@@ -35,7 +35,7 @@ HTML_PAGES = [
         "/contact/",
         "Connect With Rick Arko",
         "https://rickarko.com/contact/",
-        "Open to new opportunities, thoughtful collaborations, and selective consulting.",
+        "IC roles, hands-on technical leadership, and selective consulting.",
     ),
     (
         "/sign-in/",

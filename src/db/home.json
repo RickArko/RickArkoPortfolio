@@ -7,12 +7,12 @@
         "linkedin_url": "https://www.linkedin.com/in/rickarko",
         "github_url": "https://github.com/RickArko",
         "medium_url": "https://medium.com/@rickarko/",
-        "availability": "Open to senior IC roles in applied AI/ML/Data Science, selective consulting, and advisory opportunities.",
+        "availability": "Senior IC / builder roles in applied AI/ML and selective consulting.",
         "location": "United States"
     },
     "hero": {
-        "eyebrow": "Experienced builder, open to opportunities",
-        "headline": "Looking to scale ML/AI solutions responsibly.",
+        "eyebrow": "Applied AI/ML, built for production",
+        "headline": "Scaling ML/AI solutions responsibly.",
         "subheadline": "Over 10 years of SME and technical ownership experience in e-commerce and supply chain, with recent technical ownership across forecasting, pricing, optimization, MLOps and platform ownership, and team building and hiring.",
         "primary_cta": {
             "label": "See Experience",
@@ -25,7 +25,7 @@
         "highlights": [
             "10+ years across forecasting, pricing, recommendation, and operational ML in production",
             "Strong at bridging technical depth, product judgment, and stakeholder trust",
-            "Open to senior IC, lead, and selective consulting opportunities"
+            "IC builder by default; technical lead when the system needs it"
         ]
     },
     "stats": [
@@ -45,7 +45,7 @@
     "about": [
         "I am an applied machine learning builder with a hands-on background in forecasting, pricing, recommendation systems, and production data products. Most of my work has lived in environments where reliability, clarity, and operational usefulness matter more than hype.",
         "I enjoy turning ambiguous business problems into systems that actually ship. That can mean designing a grounded LLM workflow, improving an existing model stack, building better evaluation loops, or helping a team move from prototype thinking to dependable production behavior.",
-        "Right now I am especially interested in the next role or collaboration where I can contribute as a senior builder: close to the work, close to the stakeholders, and focused on useful outcomes."
+        "I do my best work close to the systems, close to the stakeholders, and focused on outcomes that hold up in production."
     ],
     "services": [
         {
@@ -106,11 +106,11 @@
     ],
     "engagements": [
         {
-            "title": "Senior IC or Staff-Level Role",
+            "title": "Senior Builder / IC",
             "description": "A strong fit if you need someone who can own messy ML and AI problems end to end while collaborating well across product, engineering, and operations."
         },
         {
-            "title": "Technical Lead or Early AI Hire",
+            "title": "Hands-on Technical Lead",
             "description": "Useful for teams that want a pragmatic builder who can shape direction, mentor others, and still stay close to the code and systems."
         },
         {
