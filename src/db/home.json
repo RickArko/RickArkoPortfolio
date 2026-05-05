@@ -11,9 +11,9 @@
         "location": "United States"
     },
     "hero": {
-        "eyebrow": "Experienced builder, open to the right next opportunity",
-        "headline": "I build AI/ML Solutions that businesses can use to scale responsibly.",
-        "subheadline": "Over the last decade I have worked across forecasting, pricing, recommendation, and operational ML in production settings. I am now looking for the next chapter: strong teams, meaningful problems, and opportunities where hands-on technical judgment still matters.",
+        "eyebrow": "Experienced builder, open to opportunities",
+        "headline": "Looking to scale ML/AI solutions responsibly.",
+        "subheadline": "Over 10 years of SME and technical ownership experience in e-commerce and supply chain, with recent technical ownership across forecasting, pricing, optimization, MLOps and platform ownership, and team building and hiring.",
         "primary_cta": {
             "label": "See Experience",
             "href": "/experience/"
