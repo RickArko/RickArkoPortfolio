@@ -9,9 +9,9 @@ pytestmark = pytest.mark.end_to_end
 HTML_PAGES = [
     (
         "/",
-        "Rick Arko | Applied AI/ML Builder and Senior Data Scientist",
+        "Rick Arko | AI/ML Builder, Senior Data Scientist, ML Engineer",
         "https://rickarko.com/",
-        "I build AI/ML Solutions that businesses can use to scale responsibly.",
+        "I build AI/ML solutions that businesses can use to scale responsibly.",
     ),
     (
         "/experience/",
@@ -35,13 +35,13 @@ HTML_PAGES = [
         "/contact/",
         "Connect With Rick Arko",
         "https://rickarko.com/contact/",
-        "Open to new opportunities, thoughtful collaborations, and selective consulting.",
+        "IC roles, hands-on technical leadership, and selective consulting.",
     ),
     (
         "/sign-in/",
         "Sign In | Rick Arko",
         "https://rickarko.com/sign-in/",
-        "Use this lightweight entry point for private updates, member access, or any",
+        "A separate space from the public site, used for active engagements",
     ),
 ]
 
@@ -129,7 +129,7 @@ def test_sign_in_page_handles_minimal_submission_feedback(client):
     success_body = success_response.data.decode()
 
     assert success_response.status_code == 200
-    assert "Minimal sign-in captured." in success_body
+    assert "Sign-in received." in success_body
     assert 'value="user@example.com"' in success_body
     assert "checked" in success_body
 

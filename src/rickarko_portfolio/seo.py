@@ -28,7 +28,7 @@ PAGE_DEFINITIONS = {
         slug="home",
         label="Home",
         path="/",
-        title="Rick Arko | Applied AI/ML Builder and Senior Data Scientist",
+        title="Rick Arko | AI/ML Builder, Senior Data Scientist, ML Engineer",
         description=(
             "Rick Arko is an experienced machine learning builder focused on "
             "production AI, forecasting, pricing, recommendation systems, and "

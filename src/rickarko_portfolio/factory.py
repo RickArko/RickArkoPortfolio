@@ -100,11 +100,13 @@ def create_app(
 
     @app.route("/sign-in/", methods=["GET", "POST"])
     def sign_in() -> tuple[str, int]:
+        home_content = load_home_content(resolved_settings)
         context: dict[str, Any] = {
             "email": "",
             "remember": False,
             "status": None,
             "message": None,
+            "sign_in": home_content.get("sign_in", {}),
         }
 
         if request.method == "POST":
@@ -123,8 +125,8 @@ def create_app(
                 context.update(
                     status="success",
                     message=(
-                        "Minimal sign-in captured. Connect this form to a real "
-                        "auth provider when you're ready."
+                        "Sign-in received. I'll follow up by email — use the "
+                        "contact page for anything time-sensitive."
                     ),
                 )
 
