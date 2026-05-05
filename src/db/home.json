@@ -1,7 +1,7 @@
 {
     "profile": {
         "name": "Rick Arko",
-        "headline": "Applied AI/ML Builder and Senior Data Scientist",
+        "headline": "AI/ML Builder, Senior Data Scientist, ML Engineer",
         "short_tagline": "I build AI/ML solutions that businesses can use to scale responsibly.",
         "email": "rickarko@pm.me",
         "linkedin_url": "https://www.linkedin.com/in/rickarko",
@@ -156,5 +156,30 @@
             "Why forecasting and operational ML still matter in the age of generative AI.",
             "How teams can avoid expensive AI/ML/Data platform detours early on."
         ]
+    },
+    "sign_in": {
+        "eyebrow": "Reserved access",
+        "headline": "Sign in for private work.",
+        "intro": "A separate space from the public site, used for active engagements and a small set of private writing. By invite for now.",
+        "points": [
+            {
+                "title": "Active engagements",
+                "description": "Project status, shared notes, and the decisions log — kept off the public site so they stay specific to the work."
+            },
+            {
+                "title": "Private writing",
+                "description": "Drafts and longer-form notes not yet ready for the public blog."
+            },
+            {
+                "title": "Need access?",
+                "description": "Reach out from the contact page if you think we should be working together."
+            }
+        ],
+        "form": {
+            "eyebrow": "Sign in",
+            "headline": "Welcome back.",
+            "note": "Use the credentials from your invite email.",
+            "help_label": "Need help?"
+        }
     }
 }

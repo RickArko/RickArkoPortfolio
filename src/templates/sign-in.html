@@ -3,33 +3,24 @@
 {% block content %}
 <section class="auth-shell section">
     <div class="auth-panel card card--glass" data-reveal>
-        <p class="section-eyebrow">Minimal sign in</p>
-        <h1>Welcome back.</h1>
-        <p>
-            Use this lightweight entry point for private updates, member access, or any
-            future authentication flow you want to wire into the site.
-        </p>
+        <p class="section-eyebrow">{{ context.sign_in.eyebrow }}</p>
+        <h1>{{ context.sign_in.headline }}</h1>
+        <p>{{ context.sign_in.intro }}</p>
 
         <div class="auth-points">
+            {% for point in context.sign_in.points %}
             <article class="auth-point">
-                <h2>Only the essentials</h2>
-                <p>Email, password, one clear action, and no extra UI clutter.</p>
+                <h2>{{ point.title }}</h2>
+                <p>{{ point.description }}</p>
             </article>
-            <article class="auth-point">
-                <h2>Ready for real auth</h2>
-                <p>The form posts server-side already, so it can be connected to a provider later without reworking the screen.</p>
-            </article>
-            <article class="auth-point">
-                <h2>Still easy to reach me</h2>
-                <p>If you were actually looking to connect, the contact page is still the fastest path.</p>
-            </article>
+            {% endfor %}
         </div>
     </div>
 
     <div class="auth-card card" data-reveal>
-        <p class="section-eyebrow">Account access</p>
-        <h2>Sign in</h2>
-        <p class="auth-note">A compact, server-rendered form with just enough structure to plug into a full auth flow later.</p>
+        <p class="section-eyebrow">{{ context.sign_in.form.eyebrow }}</p>
+        <h2>{{ context.sign_in.form.headline }}</h2>
+        <p class="auth-note">{{ context.sign_in.form.note }}</p>
 
         {% if context.message %}
         <div
@@ -79,7 +70,7 @@
                     >
                     <span>Remember me</span>
                 </label>
-                <a href="{{ url_for('contact') }}">Need help?</a>
+                <a href="{{ url_for('contact') }}">{{ context.sign_in.form.help_label }}</a>
             </div>
 
             <button class="button button--primary" type="submit">Continue</button>
