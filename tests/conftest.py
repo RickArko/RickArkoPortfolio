@@ -8,8 +8,6 @@ from rickarko_portfolio import create_app
 from rickarko_portfolio.config import (
     DEFAULT_DATA_DIR,
     DEFAULT_FLASK_ENV,
-    DEFAULT_INSIGHTS_PASSWORD,
-    DEFAULT_INSIGHTS_USERNAME,
     DEFAULT_PORT,
     DEFAULT_SECRET_KEY,
     DEFAULT_SITE_URL,
@@ -21,6 +19,9 @@ from rickarko_portfolio.config import (
 from rickarko_portfolio.content import clear_content_cache
 from rickarko_portfolio.factory import INSIGHTS_AUTH_SESSION_KEY
 
+TEST_INSIGHTS_USERNAME = "rickarko"
+TEST_INSIGHTS_PASSWORD = "IamRickarko"
+
 
 @pytest.fixture(autouse=True)
 def reset_runtime_state(monkeypatch: pytest.MonkeyPatch):
@@ -30,8 +31,8 @@ def reset_runtime_state(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setenv("FLASK_ENV", DEFAULT_FLASK_ENV)
     monkeypatch.setenv("PORT", str(DEFAULT_PORT))
     monkeypatch.setenv("SECRET_KEY", DEFAULT_SECRET_KEY)
-    monkeypatch.setenv("INSIGHTS_USERNAME", DEFAULT_INSIGHTS_USERNAME)
-    monkeypatch.setenv("INSIGHTS_PASSWORD", DEFAULT_INSIGHTS_PASSWORD)
+    monkeypatch.setenv("INSIGHTS_USERNAME", TEST_INSIGHTS_USERNAME)
+    monkeypatch.setenv("INSIGHTS_PASSWORD", TEST_INSIGHTS_PASSWORD)
     monkeypatch.delenv("APP_DATA_DIR", raising=False)
     monkeypatch.delenv("APP_TEMPLATE_DIR", raising=False)
     monkeypatch.delenv("APP_STATIC_DIR", raising=False)
@@ -53,6 +54,8 @@ def settings():
         data_dir=DEFAULT_DATA_DIR,
         template_dir=DEFAULT_TEMPLATE_DIR,
         static_dir=DEFAULT_STATIC_DIR,
+        insights_username=TEST_INSIGHTS_USERNAME,
+        insights_password=TEST_INSIGHTS_PASSWORD,
     )
 
 
