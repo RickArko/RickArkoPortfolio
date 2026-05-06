@@ -20,8 +20,8 @@ DEFAULT_DATA_DIR = PROJECT_SRC_DIR / "db"
 DEFAULT_TEMPLATE_DIR = PROJECT_SRC_DIR / "templates"
 DEFAULT_STATIC_DIR = PROJECT_SRC_DIR / "static"
 DEFAULT_SECRET_KEY = "rickarko-portfolio-dev-secret-replace-in-production"
-DEFAULT_INSIGHTS_USERNAME = "rickarko"
-DEFAULT_INSIGHTS_PASSWORD = "IamRickarko"
+DEFAULT_INSIGHTS_USERNAME = ""
+DEFAULT_INSIGHTS_PASSWORD = ""
 
 load_dotenv(find_dotenv(usecwd=True), override=False)
 
