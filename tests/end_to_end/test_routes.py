@@ -26,12 +26,6 @@ HTML_PAGES = [
         "A mix of private case studies, public experiments, and product-minded builds.",
     ),
     (
-        "/blog/",
-        "Insights | Rick Arko",
-        "https://rickarko.com/blog/",
-        "Topics I like writing and speaking about",
-    ),
-    (
         "/contact/",
         "Connect With Rick Arko",
         "https://rickarko.com/contact/",
@@ -103,35 +97,113 @@ def test_sign_in_page_renders_form_contract(client):
 
     assert response.status_code == 200
     assert 'method="post"' in body
-    assert 'type="email"' in body
+    assert 'name="username"' in body
     assert 'type="password"' in body
     assert "Remember me" in body
     assert 'name="robots" content="noindex,follow"' in body
 
 
-def test_sign_in_page_handles_minimal_submission_feedback(client):
-    """The sign-in page should validate missing fields and acknowledge complete posts."""
+def test_sign_in_rejects_missing_fields(client):
+    """Empty submissions should re-render the form with a validation error."""
 
-    missing_response = client.post("/sign-in/", data={"email": "", "password": ""})
-    missing_body = missing_response.data.decode()
+    response = client.post("/sign-in/", data={"username": "", "password": ""})
+    body = response.data.decode()
 
-    assert missing_response.status_code == 200
-    assert "Enter both an email and password to continue." in missing_body
+    assert response.status_code == 200
+    assert "Enter both a username and password to continue." in body
 
-    success_response = client.post(
+
+def test_sign_in_rejects_bad_credentials(client):
+    """Wrong credentials should re-render the form with an error message."""
+
+    response = client.post(
         "/sign-in/",
-        data={
-            "email": "user@example.com",
-            "password": "super-secret",
-            "remember": "on",
-        },
+        data={"username": "rickarko", "password": "wrong"},
     )
-    success_body = success_response.data.decode()
+    body = response.data.decode()
 
-    assert success_response.status_code == 200
-    assert "Sign-in received." in success_body
-    assert 'value="user@example.com"' in success_body
-    assert "checked" in success_body
+    assert response.status_code == 200
+    assert "Those credentials did not match." in body
+
+
+def test_sign_in_with_valid_credentials_redirects_to_blog(client):
+    """Valid credentials should redirect to /blog/ by default."""
+
+    response = client.post(
+        "/sign-in/",
+        data={"username": "rickarko", "password": "IamRickarko"},
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/blog/")
+
+
+def test_sign_in_honors_safe_next_parameter(client):
+    """A safe relative next= parameter should drive the post-login redirect."""
+
+    response = client.post(
+        "/sign-in/?next=/blog/",
+        data={"username": "rickarko", "password": "IamRickarko"},
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/blog/")
+
+
+def test_sign_in_ignores_offsite_next_parameter(client):
+    """An off-site next= must not be used as the redirect target."""
+
+    response = client.post(
+        "/sign-in/?next=https://evil.example.com/steal",
+        data={"username": "rickarko", "password": "IamRickarko"},
+    )
+
+    assert response.status_code == 302
+    assert "evil.example.com" not in response.headers["Location"]
+    assert response.headers["Location"].endswith("/blog/")
+
+
+def test_blog_redirects_unauthed_visitor_to_sign_in(client):
+    """The Insights page should be gated behind sign-in."""
+
+    response = client.get("/blog/")
+
+    assert response.status_code == 302
+    location = response.headers["Location"]
+    assert "/sign-in/" in location
+    assert "next=" in location and "/blog/" in location
+
+
+def test_blog_renders_for_authed_client(authed_client):
+    """An authenticated session should reach the Insights page."""
+
+    response = authed_client.get("/blog/")
+    body = response.data.decode()
+
+    assert response.status_code == 200
+    assert "<title>Insights | Rick Arko</title>" in body
+
+
+def test_sign_out_clears_session_and_redirects_home(authed_client):
+    """Signing out should drop the session and bounce to home."""
+
+    response = authed_client.get("/sign-out/")
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/")
+
+    follow_up = authed_client.get("/blog/")
+    assert follow_up.status_code == 302
+    assert "/sign-in/" in follow_up.headers["Location"]
+
+
+def test_authed_navbar_shows_sign_out(authed_client):
+    """When signed in, the navbar should expose a sign-out link, not sign-in."""
+
+    response = authed_client.get("/")
+    body = response.data.decode()
+
+    assert ">Sign out</a>" in body
+    assert ">Sign in</a>" not in body
 
 
 def test_404_page_renders_branded_fallback_without_traceback(client):

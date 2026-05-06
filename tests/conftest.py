@@ -8,7 +8,10 @@ from rickarko_portfolio import create_app
 from rickarko_portfolio.config import (
     DEFAULT_DATA_DIR,
     DEFAULT_FLASK_ENV,
+    DEFAULT_INSIGHTS_PASSWORD,
+    DEFAULT_INSIGHTS_USERNAME,
     DEFAULT_PORT,
+    DEFAULT_SECRET_KEY,
     DEFAULT_SITE_URL,
     DEFAULT_STATIC_DIR,
     DEFAULT_TEMPLATE_DIR,
@@ -16,6 +19,7 @@ from rickarko_portfolio.config import (
     clear_settings_cache,
 )
 from rickarko_portfolio.content import clear_content_cache
+from rickarko_portfolio.factory import INSIGHTS_AUTH_SESSION_KEY
 
 
 @pytest.fixture(autouse=True)
@@ -25,6 +29,9 @@ def reset_runtime_state(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setenv("SITE_URL", DEFAULT_SITE_URL)
     monkeypatch.setenv("FLASK_ENV", DEFAULT_FLASK_ENV)
     monkeypatch.setenv("PORT", str(DEFAULT_PORT))
+    monkeypatch.setenv("SECRET_KEY", DEFAULT_SECRET_KEY)
+    monkeypatch.setenv("INSIGHTS_USERNAME", DEFAULT_INSIGHTS_USERNAME)
+    monkeypatch.setenv("INSIGHTS_PASSWORD", DEFAULT_INSIGHTS_PASSWORD)
     monkeypatch.delenv("APP_DATA_DIR", raising=False)
     monkeypatch.delenv("APP_TEMPLATE_DIR", raising=False)
     monkeypatch.delenv("APP_STATIC_DIR", raising=False)
@@ -74,6 +81,16 @@ def client(app):
     """Yield a Flask test client."""
 
     with app.test_client() as test_client:
+        yield test_client
+
+
+@pytest.fixture()
+def authed_client(app):
+    """Yield a test client with an active Insights session."""
+
+    with app.test_client() as test_client:
+        with test_client.session_transaction() as session:
+            session[INSIGHTS_AUTH_SESSION_KEY] = True
         yield test_client
 
 
