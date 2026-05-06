@@ -33,6 +33,7 @@ def test_create_app_registers_expected_routes(app):
         "/blog/",
         "/contact/",
         "/sign-in/",
+        "/sign-out/",
         "/robots.txt",
         "/sitemap.xml",
         "/health",

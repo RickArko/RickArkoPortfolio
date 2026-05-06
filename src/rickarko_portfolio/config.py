@@ -19,6 +19,9 @@ DEFAULT_STATIC_IMAGE_PATH = "/static/images/profile-image.png"
 DEFAULT_DATA_DIR = PROJECT_SRC_DIR / "db"
 DEFAULT_TEMPLATE_DIR = PROJECT_SRC_DIR / "templates"
 DEFAULT_STATIC_DIR = PROJECT_SRC_DIR / "static"
+DEFAULT_SECRET_KEY = "rickarko-portfolio-dev-secret-replace-in-production"
+DEFAULT_INSIGHTS_USERNAME = "rickarko"
+DEFAULT_INSIGHTS_PASSWORD = "IamRickarko"
 
 load_dotenv(find_dotenv(usecwd=True), override=False)
 
@@ -35,6 +38,9 @@ class Settings:
     static_dir: Path
     static_image_path: str = DEFAULT_STATIC_IMAGE_PATH
     robots_noindex: bool = False
+    secret_key: str = DEFAULT_SECRET_KEY
+    insights_username: str = DEFAULT_INSIGHTS_USERNAME
+    insights_password: str = DEFAULT_INSIGHTS_PASSWORD
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "site_url", self.site_url.rstrip("/"))
@@ -73,6 +79,9 @@ def build_settings(
     static_dir: Path | None = None,
     static_image_path: str = DEFAULT_STATIC_IMAGE_PATH,
     robots_noindex: bool = False,
+    secret_key: str = DEFAULT_SECRET_KEY,
+    insights_username: str = DEFAULT_INSIGHTS_USERNAME,
+    insights_password: str = DEFAULT_INSIGHTS_PASSWORD,
 ) -> Settings:
     """Build an immutable settings object."""
 
@@ -85,6 +94,9 @@ def build_settings(
         static_dir=static_dir or DEFAULT_STATIC_DIR,
         static_image_path=static_image_path,
         robots_noindex=robots_noindex,
+        secret_key=secret_key,
+        insights_username=insights_username,
+        insights_password=insights_password,
     )
 
 
@@ -107,6 +119,9 @@ def get_settings() -> Settings:
         template_dir=Path(os.getenv("APP_TEMPLATE_DIR", DEFAULT_TEMPLATE_DIR)),
         static_dir=Path(os.getenv("APP_STATIC_DIR", DEFAULT_STATIC_DIR)),
         robots_noindex=_env_bool("ROBOTS_NOINDEX"),
+        secret_key=os.getenv("SECRET_KEY", DEFAULT_SECRET_KEY),
+        insights_username=os.getenv("INSIGHTS_USERNAME", DEFAULT_INSIGHTS_USERNAME),
+        insights_password=os.getenv("INSIGHTS_PASSWORD", DEFAULT_INSIGHTS_PASSWORD),
     )
 
 

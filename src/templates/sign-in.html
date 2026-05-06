@@ -33,15 +33,16 @@
         {% endif %}
 
         <form method="post" novalidate>
+            <input type="hidden" name="next" value="{{ context.next }}">
             <div class="auth-field">
-                <label for="email">Email</label>
+                <label for="username">Username</label>
                 <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    placeholder="you@example.com"
-                    value="{{ context.email }}"
+                    id="username"
+                    name="username"
+                    type="text"
+                    autocomplete="username"
+                    placeholder="your username"
+                    value="{{ context.username }}"
                     {% if context.message %}aria-describedby="sign-in-message"{% endif %}
                     required
                 >

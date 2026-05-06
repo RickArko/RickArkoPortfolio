@@ -190,7 +190,7 @@
         "form": {
             "eyebrow": "Sign in",
             "headline": "Welcome back.",
-            "note": "Use the credentials from your invite email.",
+            "note": "Use the username and password shared with you.",
             "help_label": "Need help?"
         }
     }

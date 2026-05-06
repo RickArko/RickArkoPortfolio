@@ -2,10 +2,21 @@
 
 from __future__ import annotations
 
+import hmac
 from datetime import date
+from functools import wraps
 from typing import Any, Mapping
+from urllib.parse import urlparse
 
-from flask import Flask, Response, render_template, request
+from flask import (
+    Flask,
+    Response,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
 
 from .config import Settings, get_settings
 from .content import (
@@ -15,6 +26,25 @@ from .content import (
     load_site_profile,
 )
 from .seo import build_page, build_sitemap_pages
+
+INSIGHTS_AUTH_SESSION_KEY = "insights_authed"
+
+
+def _is_insights_authed() -> bool:
+    return bool(session.get(INSIGHTS_AUTH_SESSION_KEY))
+
+
+def _safe_next_target(candidate: str | None, fallback: str) -> str:
+    """Allow only same-host relative paths so `next` cannot redirect off-site."""
+
+    if not candidate:
+        return fallback
+    parsed = urlparse(candidate)
+    if parsed.scheme or parsed.netloc:
+        return fallback
+    if not candidate.startswith("/"):
+        return fallback
+    return candidate
 
 
 def create_app(
@@ -32,6 +62,7 @@ def create_app(
         static_url_path="/static",
     )
     app.config.from_mapping(SETTINGS=resolved_settings)
+    app.secret_key = resolved_settings.secret_key
     if config_overrides:
         app.config.update(config_overrides)
 
@@ -49,9 +80,19 @@ def create_app(
                 page=build_page(page_key, resolved_settings),
                 site=load_site_profile(resolved_settings),
                 current_year=date.today().year,
+                insights_authed=_is_insights_authed(),
             ),
             status,
         )
+
+    def require_insights_auth(view):
+        @wraps(view)
+        def wrapper(*args, **kwargs):
+            if not _is_insights_authed():
+                return redirect(url_for("sign_in", next=request.path), code=302)
+            return view(*args, **kwargs)
+
+        return wrapper
 
     @app.errorhandler(404)
     def not_found(_error: Exception) -> tuple[str, int]:
@@ -75,6 +116,7 @@ def create_app(
         )
 
     @app.route("/blog/")
+    @require_insights_auth
     def blog() -> tuple[str, int]:
         return render_page(
             "blog.html",
@@ -99,38 +141,54 @@ def create_app(
         )
 
     @app.route("/sign-in/", methods=["GET", "POST"])
-    def sign_in() -> tuple[str, int]:
+    def sign_in():
         home_content = load_home_content(resolved_settings)
+        next_target = _safe_next_target(request.values.get("next"), url_for("blog"))
         context: dict[str, Any] = {
-            "email": "",
+            "username": "",
             "remember": False,
             "status": None,
             "message": None,
+            "next": next_target,
             "sign_in": home_content.get("sign_in", {}),
         }
 
+        if _is_insights_authed() and request.method == "GET":
+            return redirect(next_target, code=302)
+
         if request.method == "POST":
-            email = request.form.get("email", "").strip()
+            username = request.form.get("username", "").strip()
             password = request.form.get("password", "")
             remember = request.form.get("remember") == "on"
 
-            context.update(email=email, remember=remember)
+            context.update(username=username, remember=remember)
 
-            if not email or not password:
+            if not username or not password:
                 context.update(
                     status="error",
-                    message="Enter both an email and password to continue.",
+                    message="Enter both a username and password to continue.",
                 )
             else:
+                expected_user = resolved_settings.insights_username
+                expected_pw = resolved_settings.insights_password
+                user_ok = hmac.compare_digest(username, expected_user)
+                pw_ok = hmac.compare_digest(password, expected_pw)
+                if user_ok and pw_ok:
+                    session.clear()
+                    session[INSIGHTS_AUTH_SESSION_KEY] = True
+                    session.permanent = remember
+                    return redirect(next_target, code=302)
                 context.update(
-                    status="success",
-                    message=(
-                        "Sign-in received. I'll follow up by email — use the "
-                        "contact page for anything time-sensitive."
-                    ),
+                    status="error",
+                    message="Those credentials did not match. Try again.",
                 )
 
         return render_page("sign-in.html", "sign_in", context=context)
+
+    @app.route("/sign-out/", methods=["GET", "POST"])
+    def sign_out():
+        session.clear()
+        return redirect(url_for("home"), code=302)
 
     @app.route("/robots.txt")
     def robots() -> Response:
